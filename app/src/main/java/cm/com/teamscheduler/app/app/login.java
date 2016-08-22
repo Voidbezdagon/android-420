@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,35 +46,42 @@ public class login extends AppCompatActivity {
         String url = "http://10.0.2.2:8080/content/api/User/getAll";
 
         setContentView(R.layout.activity_loggedin);
-
-
-
+        final ArrayList<String> noob= new ArrayList<String>();
 
         JsonArrayRequest req = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        TextView t = (TextView) findViewById(R.id.loginLabel);
                         try {
-                            t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
+                            for (int i = 0; i < response.length(); i++)
+                            {
+                                try {
+                                    response.getJSONObject(i).getString("username");
+                                } catch (Exception e) {
+                                    //response.getJSONObject(i).toString();
+                                    System.out.println(response.getInt(i));
+                                }
 
-
-
+                                noob.add(i,response.getJSONObject(i).getString("username"));
+                            }
+                            //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                TextView t = (TextView) findViewById(R.id.loginLabel);
-                t.setText("da eba");
+                System.out.println("da eba guza");
             }
         });
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, noob);
+        ListView listview = (ListView) findViewById(R.id.listNoob);
+        listview.setAdapter(adapter);
 
     }
 
