@@ -90,4 +90,21 @@
         android:textSize="30sp"
         android:textAlignment="center"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_admin_label"
+        android:textColor="#FFFFFF"
+        android:text="Admin:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_admin"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
 </LinearLayout>

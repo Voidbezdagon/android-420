@@ -39,7 +39,8 @@ public class login extends AppCompatActivity {
     }
 
     public void loginButtonOnClick(View v){
-        startActivity(new Intent(login.this, activity_user.class));
+
+        startActivity(new Intent(login.this, scheduleCalendar.class));
     }
 
     @Override

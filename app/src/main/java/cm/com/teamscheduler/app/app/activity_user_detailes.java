@@ -29,15 +29,17 @@ public class activity_user_detailes extends AppCompatActivity {
         if(users!=null) {
             setContentView(R.layout.activity_user_detailes);
             TextView tv = (TextView) findViewById(R.id.user_id);
-            tv.setText(users.get(position).android_id.toString());
+            tv.setText(users.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.user_firstname);
-            tv.setText(users.get(position).android_firstname);
+            tv.setText(users.get(position).getFirstname());
             tv = (TextView) findViewById(R.id.user_lastname);
-            tv.setText(users.get(position).android_lastname);
+            tv.setText(users.get(position).getLastname());
             tv = (TextView) findViewById(R.id.user_username);
-            tv.setText(users.get(position).android_username);
+            tv.setText(users.get(position).getUsername());
             tv = (TextView) findViewById(R.id.user_password);
-            tv.setText(users.get(position).android_password);
+            tv.setText(users.get(position).getPassword());
+            tv = (TextView) findViewById(R.id.user_admin);
+            tv.setText(users.get(position).getAdmin().toString());
         }
     }
 }

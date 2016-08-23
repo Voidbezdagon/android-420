@@ -52,13 +52,14 @@ public class activity_user extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++)
                             {
                                 User user = new User();
-                                user.android_id=Long.parseLong(response.getJSONObject(i).getString("id"));
-                                user.android_firstname=response.getJSONObject(i).getString("firstname");
-                                user.android_lastname=response.getJSONObject(i).getString("lastname");
-                                user.android_username=response.getJSONObject(i).getString("username");
-                                user.android_password=response.getJSONObject(i).getString("password");
+                                user.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
+                                user.setFirstname(response.getJSONObject(i).getString("firstname"));
+                                user.setLastname(response.getJSONObject(i).getString("lastname"));
+                                user.setUsername(response.getJSONObject(i).getString("username"));
+                                user.setPassword(response.getJSONObject(i).getString("password"));
+                                user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
                                 users.add(i,user);
-                                displayList.add(i,user.android_firstname + " " + user.android_password);
+                                displayList.add(i,user.getFirstname() + " " + user.getPassword() + " " + user.getAdmin());
                             }
                             //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
                         } catch (JSONException e) {
