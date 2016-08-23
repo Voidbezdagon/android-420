@@ -17,6 +17,7 @@ public class User implements Serializable{
     private String lastname;
     private Boolean admin;
     private String avatar;
+    private String accesskey;
 
     public Long getId() {
         return id;
@@ -72,6 +73,14 @@ public class User implements Serializable{
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAccesskey() {
+        return accesskey;
+    }
+
+    public void setAccesskey(String accesskey) {
+        this.accesskey = accesskey;
     }
 
 }

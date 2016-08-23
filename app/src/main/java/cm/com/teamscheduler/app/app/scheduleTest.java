@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -20,8 +21,11 @@ import org.json.JSONException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.utils.Auth;
 
 /**
  * Created by void on 22.08.16.
@@ -64,7 +68,8 @@ public class scheduleTest extends AppCompatActivity {
                                 item.endDate = new Date(Long.parseLong(response.getJSONObject(i).getString("endDate")));
                                 item.recurringTime=Long.parseLong(response.getJSONObject(i).getString("recurringTime"));
                                 list.add(i,item);
-                                displayList.add(i,item.title + " " + item.description + " " + sdf.format(item.startDate) + " " + sdf.format(item.endDate));
+                                displayList.add(i,item.title + " " + item.description + " " + sdf.format(item.startDate) + " " + sdf.format(item.endDate)
+                                + " " + Auth.getInstance().getLoggedUser().getUsername() + " " + Auth.getInstance().getLoggedUser().getAccesskey());
                             }
                             //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
                         } catch (JSONException e) {
@@ -77,7 +82,15 @@ public class scheduleTest extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("da eba guza");
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
 
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);

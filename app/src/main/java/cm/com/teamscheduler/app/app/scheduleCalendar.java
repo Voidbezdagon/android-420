@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -27,9 +28,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.utils.Auth;
 
 /**
  * Created by void on 22.08.16.
@@ -120,7 +124,16 @@ public class scheduleCalendar extends Activity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("da eba guza");
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
+
 
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);

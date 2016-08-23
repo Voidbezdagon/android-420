@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -18,8 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.utils.Auth;
 
 public class activity_user extends AppCompatActivity {
     // Tag used to cancel the request
@@ -72,7 +76,15 @@ public class activity_user extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("da eba guza");
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
