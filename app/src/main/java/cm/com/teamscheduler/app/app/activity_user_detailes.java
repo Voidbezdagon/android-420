@@ -20,23 +20,24 @@ public class activity_user_detailes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-        ArrayList<User> users = null;
+
         int position = -1;
-        if (extras != null) {
-            users = extras.getParcelableArrayList("key");
-            position = extras.getInt("key2");
+
+        ArrayList<User> users = (ArrayList<User>) getIntent().getSerializableExtra("key");
+        position = extras.getInt("key2");
             //The key argument here must match that used in the other activity
+        if(users!=null) {
+            setContentView(R.layout.activity_user_detailes);
+            TextView tv = (TextView) findViewById(R.id.user_id);
+            tv.setText(users.get(position).android_id.toString());
+            tv = (TextView) findViewById(R.id.user_firstname);
+            tv.setText(users.get(position).android_firstname);
+            tv = (TextView) findViewById(R.id.user_lastname);
+            tv.setText(users.get(position).android_lastname);
+            tv = (TextView) findViewById(R.id.user_username);
+            tv.setText(users.get(position).android_username);
+            tv = (TextView) findViewById(R.id.user_password);
+            tv.setText(users.get(position).android_password);
         }
-        setContentView(R.layout.activity_user_detailes);
-        TextView tv = (TextView) findViewById(R.id.user_id);
-        tv.setText(users.get(position).android_id.toString());
-        tv=(TextView) findViewById(R.id.user_firstname);
-        tv.setText(users.get(position).android_firstname);
-        tv=(TextView) findViewById(R.id.user_lastname);
-        tv.setText(users.get(position).android_lastname);
-        tv=(TextView) findViewById(R.id.user_username);
-        tv.setText(users.get(position).android_username);
-        tv=(TextView) findViewById(R.id.user_password);
-        tv.setText(users.get(position).android_password);
     }
 }

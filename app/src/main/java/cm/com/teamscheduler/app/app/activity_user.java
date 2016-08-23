@@ -85,11 +85,11 @@ public class activity_user extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
                 Intent i = new Intent(activity_user.this, activity_user_detailes.class);
-                i.putParcelableArrayListExtra("key",users);
                 i.putExtra("key2", position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("key", users);
+                i.putExtras(bundle);
                 startActivity(i);
-
-                startActivity(new Intent(activity_user.this, activity_user_detailes.class));
                 }
 
         });
