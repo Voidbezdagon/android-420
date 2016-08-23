@@ -66,8 +66,8 @@
         android:layout_alignStart="@+id/passwordField"
         android:layout_alignRight="@+id/passwordField"
         android:layout_alignEnd="@+id/passwordField"
-        android:onClick="loginButtonOnClick"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:onClick="loginButtonOnClick" />
     </LinearLayout>
 
 

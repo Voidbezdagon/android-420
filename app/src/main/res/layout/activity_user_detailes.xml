@@ -3,45 +3,91 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:background="@drawable/bg" >
-
+    android:background="@drawable/bg"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_id_label"
+        android:textColor="#FFFFFF"
+        android:text="Id:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_id"
         android:textColor="#FFFFFF"
-        android:text=""/>
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_username_label"
+        android:textColor="#FFFFFF"
+        android:text="Username:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_username"
         android:textColor="#FFFFFF"
-        android:text=""/>
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_password_label"
+        android:textColor="#FFFFFF"
+        android:text="Password:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_password"
         android:textColor="#FFFFFF"
-        android:text=""/>
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_firstname_label"
+        android:textColor="#FFFFFF"
+        android:text="First Name:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_firstname"
         android:textColor="#FFFFFF"
-        android:text=""/>
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_lastname_label"
+        android:textColor="#FFFFFF"
+        android:text="Last Name:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_lastname"
         android:textColor="#FFFFFF"
-        android:text=""/>
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
 </LinearLayout>
