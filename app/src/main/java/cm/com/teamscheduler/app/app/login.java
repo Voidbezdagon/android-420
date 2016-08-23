@@ -88,7 +88,7 @@ public class login extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        startActivity(new Intent(login.this, scheduleCalendar.class));
+                        startActivity(new Intent(login.this, activity_user.class));
                     }
                 }, new Response.ErrorListener() {
 

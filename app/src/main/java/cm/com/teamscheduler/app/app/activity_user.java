@@ -1,14 +1,18 @@
 package cm.com.teamscheduler.app.app;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -33,18 +37,63 @@ public class activity_user extends AppCompatActivity {
     //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
     ArrayAdapter<String> adapter;
 
+    //FOR MENU
+    String[] menu;
+    DrawerLayout dLayout;
+    ListView dList;
+    ArrayAdapter<String> adapterMenu;
+    //END
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_loggedin);
 
+
+        //MENU
+        menu = new String[]{"User List","Calendar"};
+        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        dList = (ListView) findViewById(R.id.left_drawer);
+        adapterMenu = new ArrayAdapter<String>(this, R.layout.custom_menu_text,menu);
+
+        dList.setAdapter(adapterMenu);
+
+        dList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            @TargetApi(16)
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+
+                dLayout.closeDrawers();
+                switch (position){
+                    case 0:{
+                        startActivity(new Intent(activity_user.this,activity_user.class));
+                        break;
+                    }
+                    case 1:{
+                        startActivity(new Intent(activity_user.this,scheduleCalendar.class));
+                        break;
+                    }
+                }
+
+//                Bundle args = new Bundle();
+//                args.putString("Menu", menu[position]);
+//                Fragment detail = new DetailFragment();
+//                detail.setArguments(args);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.content_frame, detail).commit();
+
+            }
+
+        });
+
+        //END OF MENU
 
         String tag_json_arry = "json_array_req";
 
         String url = "http://10.0.2.2:8080/content/api/User/getAll";
 
-        setContentView(R.layout.activity_loggedin);
+
         final ArrayList<User> users= new ArrayList<User>();
         final ArrayList<String> displayList= new ArrayList<String>();
 
