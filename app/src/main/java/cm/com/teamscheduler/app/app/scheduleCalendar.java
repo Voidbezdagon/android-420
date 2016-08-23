@@ -61,7 +61,7 @@ public class scheduleCalendar extends Activity {
 
         String tag_json_arry = "json_array_req";
 
-        String url = "http://10.0.2.2:8080/content/api/Schedule/getAll/1";
+        String url = "http://10.0.2.2:8080/content/api/Schedule/getAll/";
         final ArrayList<Schedule> list= new ArrayList<Schedule>();
         final ArrayList<String> displayList= new ArrayList<String>();
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
