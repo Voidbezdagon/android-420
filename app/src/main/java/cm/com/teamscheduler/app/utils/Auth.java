@@ -2,7 +2,7 @@ package cm.com.teamscheduler.app.utils;
 
 import java.io.IOException;
 
-import cm.com.teamscheduler.app.app.User;
+import cm.com.teamscheduler.app.entity.User;
 
 /**
  * Created by void on 23.08.16.

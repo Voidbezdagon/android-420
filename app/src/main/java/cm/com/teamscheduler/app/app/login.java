@@ -1,39 +1,26 @@
 package cm.com.teamscheduler.app.app;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
 public class login extends AppCompatActivity {

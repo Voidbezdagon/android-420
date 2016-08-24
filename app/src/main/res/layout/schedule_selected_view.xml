@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@drawable/bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_titler_label"
+        android:textColor="#919191"
+        android:text="Title:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_title"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_description_label"
+        android:textColor="#919191"
+        android:text="Description:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_description"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_startdate_label"
+        android:textColor="#919191"
+        android:text="Start Date:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_startdate"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_enddate_label"
+        android:textColor="#919191"
+        android:text="End Date:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_enddate"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_recurringtime_label"
+        android:textColor="#919191"
+        android:text="Recurring Time:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_recurringtime"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_assignedteam_label"
+        android:textColor="#919191"
+        android:text="Assigned Team:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_assignedteam"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_location_label"
+        android:textColor="#919191"
+        android:text="Location:"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_location"
+        android:textColor="#FFFFFF"
+        android:text=""
+        android:textSize="30sp"
+        android:textAlignment="center"/>
+
+</LinearLayout>

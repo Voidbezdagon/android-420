@@ -2,14 +2,12 @@ package cm.com.teamscheduler.app.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.User;
 
 /**
  * Created by kostadin on 22.08.16.

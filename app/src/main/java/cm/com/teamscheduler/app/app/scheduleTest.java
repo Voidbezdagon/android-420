@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Schedule;
+import cm.com.teamscheduler.app.entity.ScheduleReport;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
@@ -37,88 +39,43 @@ public class scheduleTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggedin);
 
-        class Schedule{
-            Long id;
-            String title;
-            String description;
-            Date startDate;
-            Date endDate;
-            Long recurringTime;
-        }
-
-        String tag_json_arry = "json_array_req";
-
-        String url = "http://10.0.2.2:8080/content/api/Schedule/getAll/";
-        final ArrayList<Schedule> list= new ArrayList<Schedule>();
-        final ArrayList<String> displayList= new ArrayList<String>();
+        final ArrayList<Schedule> list= (ArrayList<Schedule>) getIntent().getSerializableExtra("schedules");
+        final ArrayList<String> displayList = new ArrayList<String>();
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        JsonArrayRequest req = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++)
-                            {
-                                Schedule item = new Schedule();
-                                item.id=Long.parseLong(response.getJSONObject(i).getString("id"));
-                                item.title=response.getJSONObject(i).getString("title");
-                                item.description=response.getJSONObject(i).getString("description");
-                                item.startDate=new Date(Long.parseLong(response.getJSONObject(i).getString("startDate")));
-                                item.endDate = new Date(Long.parseLong(response.getJSONObject(i).getString("endDate")));
-                                item.recurringTime=Long.parseLong(response.getJSONObject(i).getString("recurringTime"));
-                                list.add(i,item);
-                                displayList.add(i,item.title + " " + item.description + " " + sdf.format(item.startDate) + " " + sdf.format(item.endDate)
-                                + " " + Auth.getInstance().getLoggedUser().getUsername() + " " + Auth.getInstance().getLoggedUser().getAccesskey());
-                            }
-                            //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        for (Schedule s : list)
+        {
+            displayList.add(s.getTitle() + " " + s.getDescription());
+        }
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("da eba guza");
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
-                return headers;
-            }
-        };
 
-        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);
         ListView listview = (ListView) findViewById(R.id.listNoob);
         listview.setAdapter(adapter);
 
-        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                setContentView(R.layout.activity_user_detailes);
-                TextView tv = (TextView) findViewById(R.id.user_id);
-                tv.setText(users.get(position).android_id.toString());
-                tv=(TextView) findViewById(R.id.user_firstname);
-                tv.setText(users.get(position).android_firstname);
-                tv=(TextView) findViewById(R.id.user_lastname);
-                tv.setText(users.get(position).android_lastname);
-                tv=(TextView) findViewById(R.id.user_username);
-                tv.setText(users.get(position).android_username);
-                tv=(TextView) findViewById(R.id.user_password);
-                tv.setText(users.get(position).android_password);
+
+                setContentView(R.layout.schedule_selected_view);
+                TextView tv = (TextView) findViewById(R.id.schedule_title);
+                tv.setText(list.get(position).getTitle().toString());
+                TextView tv1 = (TextView) findViewById(R.id.schedule_description);
+                tv1.setText(list.get(position).getDescription().toString());
+                TextView tv2 = (TextView) findViewById(R.id.schedule_startdate);
+                tv2.setText(sdf.format(list.get(position).getStartDate()));
+                TextView tv3 = (TextView) findViewById(R.id.schedule_enddate);
+                tv3.setText(sdf.format(list.get(position).getEndDate()));
+                TextView tv4 = (TextView) findViewById(R.id.schedule_recurringtime);
+                tv4.setText(list.get(position).getRecurringTime().toString() + " Days");
+                TextView tv5 = (TextView) findViewById(R.id.schedule_assignedteam);
+                tv5.setText(list.get(position).getAssignedTeam().getTeamname().toString());
+                TextView tv6 = (TextView) findViewById(R.id.schedule_location);
+                tv6.setText(list.get(position).getLocation().getName().toString());
             }
-        });*/
-    }
-
-    public void loginButtonOnClick(View v){
-
+        });
     }
 
     @Override
