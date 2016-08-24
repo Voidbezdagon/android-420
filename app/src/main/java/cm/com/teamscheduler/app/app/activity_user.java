@@ -117,7 +117,7 @@ public class activity_user extends AppCompatActivity {
                                 user.setPassword(response.getJSONObject(i).getString("password"));
                                 user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
                                 users.add(i,user);
-                                displayList.add(i,user.getFirstname() + " " + user.getPassword() + " " + user.getAdmin());
+                                displayList.add(i,user.getFirstname() + " " + user.getPassword());
                             }
                             //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
                         } catch (JSONException e) {
