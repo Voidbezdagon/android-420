@@ -4,11 +4,14 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -37,11 +40,9 @@ public class activity_user extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
     //FOR MENU
-    String[] menu;
     DrawerLayout dLayout;
-    ListView dList;
-    ArrayAdapter<String> adapterMenu;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
     //END
 
     @Override
@@ -59,36 +60,23 @@ public class activity_user extends AppCompatActivity {
 
 
         //MENU & TOOLBAR
-        menu = new String[]{"User List","Calendar"};
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
-        dList = (ListView) findViewById(R.id.left_drawer);
-        adapterMenu = new ArrayAdapter<String>(this, R.layout.custom_menu_text,menu);
-
-
-
-        dLayout.addDrawerListener(actionBarDrawerToggle);
-
-        dList.setAdapter(adapterMenu);
-
-
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
+        dLayout.setDrawerListener(actionBarDrawerToggle);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            @TargetApi(16)
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
-                dLayout.closeDrawers();
-                switch (position) {
-                    case 0: {
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.user_list_view:
                         startActivity(new Intent(activity_user.this, activity_user.class));
                         break;
-                    }
-                    case 1: {
-                        startActivity(new Intent(activity_user.this, scheduleCalendar.class));
+                    case R.id.calendar_view:
+                        startActivity(new Intent(activity_user.this,scheduleCalendar.class));
                         break;
-                    }
                 }
+
+                return false;
             }
         });
 
@@ -119,7 +107,6 @@ public class activity_user extends AppCompatActivity {
                                 users.add(i,user);
                                 displayList.add(i,user.getFirstname() + " " + user.getPassword());
                             }
-                            //t.setText(response.getJSONObject(1).getString("username") + " e golqm " + response.getJSONObject(0).getString("password"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -142,7 +129,22 @@ public class activity_user extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the current item from ListView
+                View view = super.getView(position,convertView,parent);
+
+                // Get the Layout Parameters for ListView Current Item View
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                // Set the height of the Item View
+                params.height = 120;
+                view.setLayoutParams(params);
+
+                return view;
+            }
+        };
         ListView listview = (ListView) findViewById(R.id.listNoob);
         listview.setAdapter(adapter);
 
@@ -160,6 +162,8 @@ public class activity_user extends AppCompatActivity {
                 }
 
         });
+
+
     }
 
     @Override

@@ -3,6 +3,6 @@
     android:id="@+id/tv"
     android:textColor="#FFFFFF"
     android:layout_width="fill_parent"
-    android:gravity="center"
     android:layout_height="fill_parent"
-    android:textSize="28sp"/>
+    android:textSize="20sp"
+    android:gravity="center_vertical"/>

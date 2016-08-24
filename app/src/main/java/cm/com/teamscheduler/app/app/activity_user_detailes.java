@@ -3,10 +3,12 @@ package cm.com.teamscheduler.app.app;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,11 +23,9 @@ import cm.com.teamscheduler.R;
 public class activity_user_detailes extends AppCompatActivity {
 
     //FOR MENU
-    String[] menu;
     DrawerLayout dLayout;
-    ListView dList;
-    ArrayAdapter<String> adapterMenu;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
     //END
 
     @Override
@@ -44,36 +44,23 @@ public class activity_user_detailes extends AppCompatActivity {
 
 
         //MENU & TOOLBAR
-        menu = new String[]{"User List","Calendar"};
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
-        dList = (ListView) findViewById(R.id.left_drawer);
-        adapterMenu = new ArrayAdapter<String>(this, R.layout.custom_menu_text,menu);
-
-
-
-        dLayout.addDrawerListener(actionBarDrawerToggle);
-
-        dList.setAdapter(adapterMenu);
-
-
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
+        dLayout.setDrawerListener(actionBarDrawerToggle);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            @TargetApi(16)
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
-                dLayout.closeDrawers();
-                switch (position) {
-                    case 0: {
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.user_list_view:
                         startActivity(new Intent(activity_user_detailes.this, activity_user.class));
                         break;
-                    }
-                    case 1: {
-                        startActivity(new Intent(activity_user_detailes.this, scheduleCalendar.class));
+                    case R.id.calendar_view:
+                        startActivity(new Intent(activity_user_detailes.this,scheduleCalendar.class));
                         break;
-                    }
                 }
+
+                return false;
             }
         });
 
