@@ -4,11 +4,13 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000">
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/compactcalendar_view"
@@ -16,6 +18,7 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
             app:compactCalendarTextSize="18sp"
             app:compactCalendarBackgroundColor="#000000"
             app:compactCalendarTextColor="#fff"
@@ -24,7 +27,7 @@
             app:compactCalendarMultiEventIndicatorColor="#fff"
             />
 
-</FrameLayout>
+</RelativeLayout>
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
