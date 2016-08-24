@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.User;
 
 
 public class activity_user_detailes extends AppCompatActivity {

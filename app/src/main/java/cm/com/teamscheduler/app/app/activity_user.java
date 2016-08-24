@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
 public class activity_user extends AppCompatActivity {

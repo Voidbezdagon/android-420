@@ -1,9 +1,7 @@
-package cm.com.teamscheduler.app.app;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package cm.com.teamscheduler.app.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by kostadin on 22.08.16.
@@ -18,6 +16,8 @@ public class User implements Serializable{
     private Boolean admin;
     private String avatar;
     private String accesskey;
+    private Position position;
+    private List<Team> teams;
 
     public Long getId() {
         return id;
@@ -81,6 +81,22 @@ public class User implements Serializable{
 
     public void setAccesskey(String accesskey) {
         this.accesskey = accesskey;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
 }
