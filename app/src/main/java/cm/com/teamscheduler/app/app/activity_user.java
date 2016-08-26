@@ -1,6 +1,7 @@
 package cm.com.teamscheduler.app.app;
 
 import android.annotation.TargetApi;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,10 +168,31 @@ public class activity_user extends AppCompatActivity {
 
 
     }
-
+    //DRAWER MENU
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
+    }
+    //OPTIONS MENU
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.main_menu_item_1);
+        item.setTitle("Add New User");
+        item = menu.findItem(R.id.main_menu_item_2);
+        item.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    //OPTIONS MENU
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_menu_item_1: startActivity(new Intent(activity_user.this, activity_create_user.class));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

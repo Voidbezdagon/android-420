@@ -28,7 +28,7 @@
         />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_id_label"
         android:textColor="#FFFFFF"
@@ -39,84 +39,97 @@
         android:layout_marginLeft="30dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_id"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@+id/user_id_label"/>
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/user_id_label"
+        android:layout_below="@+id/avatar_detail"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_username_label"
         android:textColor="#ffffff"
         android:text="Username:"
         android:textSize="17sp"
         android:layout_below="@+id/user_id"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_username"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@+id/user_username_label"/>
+        android:textSize="20sp"
+        android:layout_below="@+id/user_id"
+        android:layout_toRightOf="@+id/user_username_label"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="8dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_password_label"
         android:textColor="#ffffff"
         android:text="Password:"
         android:textSize="17sp"
         android:layout_below="@+id/user_username"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_password"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@+id/user_password_label"/>
+        android:textSize="20sp"
+        android:layout_below="@+id/user_username"
+        android:layout_toRightOf="@id/user_password_label"
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="8dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_firstname_label"
         android:textColor="#ffffff"
         android:text="First Name:"
         android:textSize="17sp"
         android:layout_below="@+id/user_password"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_firstname"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@id/user_firstname_label"/>
+        android:textSize="20sp"
+        android:layout_below="@id/user_password"
+        android:layout_toRightOf="@id/user_firstname_label"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="17dp"
+        />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_lastname_label"
         android:textColor="#ffffff"
         android:text="Last Name:"
         android:textSize="17sp"
         android:layout_below="@id/user_firstname"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -124,19 +137,23 @@
         android:id="@+id/user_lastname"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@id/user_lastname_label"/>
+        android:textSize="20sp"
+        android:layout_below="@id/user_firstname"
+        android:layout_toRightOf="@+id/user_username_label"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="17dp"
+        />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_admin_label"
         android:textColor="#ffffff"
         android:text="Admin:"
         android:textSize="17sp"
         android:layout_below="@+id/user_lastname"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -144,9 +161,11 @@
         android:id="@+id/user_admin"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_below="@+id/user_admin_label"/>
+        android:textSize="20sp"
+        android:layout_below="@+id/user_lastname"
+        android:layout_toRightOf="@+id/user_admin_label"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="17dp"/>
 
 </RelativeLayout>
     <android.support.design.widget.NavigationView
