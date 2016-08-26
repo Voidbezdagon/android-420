@@ -46,6 +46,9 @@
         <activity android:name="cm.com.teamscheduler.app.app.scheduleDetails"
             android:label="@string/app_name">
         </activity>
+        <activity android:name="cm.com.teamscheduler.app.app.scheduleCreateReport"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 

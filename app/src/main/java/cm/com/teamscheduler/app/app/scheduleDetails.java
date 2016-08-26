@@ -1,5 +1,6 @@
 package cm.com.teamscheduler.app.app;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,9 @@ import cm.com.teamscheduler.app.utils.Auth;
  * Created by void on 26.08.16.
  */
 public class scheduleDetails extends AppCompatActivity {
+
+    Schedule schedule;
+    Long dateClicked;
 
     public Long getHighestPosition(List<Position> positions)
     {
@@ -131,6 +135,10 @@ public class scheduleDetails extends AppCompatActivity {
 
     public void createReportButtonOnClick(View v)
     {
-            System.out.println("hui +++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        Intent i = new Intent(scheduleDetails.this, scheduleCreateReport.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("schedule", (Schedule) getIntent().getSerializableExtra("schedule"));
+        i.putExtras(bundle);
+        startActivity(i);
     }
 }

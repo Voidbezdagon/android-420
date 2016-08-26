@@ -38,6 +38,8 @@ import cm.com.teamscheduler.app.utils.Auth;
  */
 public class scheduleDayList extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class scheduleDayList extends AppCompatActivity {
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);
         ListView listview = (ListView) findViewById(R.id.listNoob);
+        //listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); android.R.layout.simple_list_item_multiple_choice
         listview.setAdapter(adapter);
 
        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

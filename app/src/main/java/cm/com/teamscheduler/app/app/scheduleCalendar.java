@@ -179,7 +179,7 @@ public class scheduleCalendar extends AppCompatActivity {
                                                     {
                                                         ScheduleActivityReport sar = new ScheduleActivityReport();
                                                         sar.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("id")));
-                                                        sar.setDate(sdf.parse(sdf.format(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("date"))));
+                                                        //sar.setDate(sdf.parse(sdf.format(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("date"))));
                                                         sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("finished")));
                                                         sarList.add(l, sar);
                                                     }
@@ -205,17 +205,17 @@ public class scheduleCalendar extends AppCompatActivity {
                                             act.setDescription(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getString("description"));
                                             //Setting ActivityReports to Report
                                             ArrayList<ScheduleActivityReport> sarList = new ArrayList<ScheduleActivityReport>();
-                                            if (response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").length() > 0)
-                                            {
-                                                for (int l = 0; l < response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").length(); l++)
-                                                {
+                                            if (response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").length() > 0) {
+                                                for (int l = 0; l < response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").length(); l++) {
                                                     ScheduleActivityReport sar = new ScheduleActivityReport();
                                                     sar.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("id")));
                                                     sar.setDate(sdf.parse(sdf.format(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("date"))));
                                                     sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("finished")));
+                                                    sarList.add(sar);
                                                 }
                                             }
                                             act.setScheduleActivityReports(sarList);
+                                            activities.add(act);
                                         }
                                     }
                                 }
