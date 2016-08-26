@@ -17,119 +17,135 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/avatar_detail"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="20dp"
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_id_label"
-        android:textColor="#919191"
+        android:textColor="#FFFFFF"
         android:text="Id:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="10dp"/>
+        android:textSize="17sp"
+        android:layout_below="@+id/avatar_detail"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_id"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@+id/user_id_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_username_label"
-        android:textColor="#919191"
+        android:textColor="#ffffff"
         android:text="Username:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/user_id"/>
+        android:textSize="17sp"
+        android:layout_below="@+id/user_id"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_username"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@+id/user_username_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_password_label"
-        android:textColor="#919191"
+        android:textColor="#ffffff"
         android:text="Password:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/user_username"/>
+        android:textSize="17sp"
+        android:layout_below="@+id/user_username"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_password"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@+id/user_password_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_firstname_label"
-        android:textColor="#919191"
+        android:textColor="#ffffff"
         android:text="First Name:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/user_password"/>
+        android:textSize="17sp"
+        android:layout_below="@+id/user_password"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_firstname"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@id/user_firstname_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_lastname_label"
-        android:textColor="#919191"
+        android:textColor="#ffffff"
         android:text="Last Name:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@id/user_firstname"/>
+        android:textSize="17sp"
+        android:layout_below="@id/user_firstname"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_lastname"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@id/user_lastname_label"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_admin_label"
-        android:textColor="#919191"
+        android:textColor="#ffffff"
         android:text="Admin:"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/user_lastname"/>
+        android:textSize="17sp"
+        android:layout_below="@+id/user_lastname"
+        android:layout_marginLeft="30dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_admin"
         android:textColor="#FFFFFF"
         android:text=""
-        android:textSize="30sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:layout_below="@+id/user_admin_label"/>
 
 </RelativeLayout>
