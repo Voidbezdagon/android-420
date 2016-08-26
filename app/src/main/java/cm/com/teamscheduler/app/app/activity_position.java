@@ -1,7 +1,5 @@
 package cm.com.teamscheduler.app.app;
 
-import android.annotation.TargetApi;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,17 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
-public class activity_user extends AppCompatActivity {
-    // Tag used to cancel the request
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    ArrayList<String> listItems=new ArrayList<String>();
 
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter;
-
+public class activity_position extends AppCompatActivity {
     //FOR MENU
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -51,13 +44,13 @@ public class activity_user extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loggedin);
+        setContentView(R.layout.pisotion_view);
 
         //TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("User List");
+        getSupportActionBar().setTitle("Positions List");
 
 
 
@@ -72,13 +65,13 @@ public class activity_user extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_user.this, activity_user.class));
+                        startActivity(new Intent(activity_position.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_user.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_position.this,scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_user.this, activity_position.class));
+                        startActivity(new Intent(activity_position.this, activity_position.class));
                         break;
                 }
 
@@ -90,10 +83,10 @@ public class activity_user extends AppCompatActivity {
 
         String tag_json_arry = "json_array_req";
 
-        String url = "http://10.0.2.2:8080/content/api/User/getAll";
+        String url = "http://10.0.2.2:8080/content/api/Position/getAll";
 
 
-        final ArrayList<User> users= new ArrayList<User>();
+        final ArrayList<Position> positions= new ArrayList<Position>();
         final ArrayList<String> displayList= new ArrayList<String>();
 
         JsonArrayRequest req = new JsonArrayRequest(url,
@@ -103,15 +96,13 @@ public class activity_user extends AppCompatActivity {
                         try {
                             for (int i = 0; i < response.length(); i++)
                             {
-                                User user = new User();
-                                user.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
-                                user.setFirstname(response.getJSONObject(i).getString("firstname"));
-                                user.setLastname(response.getJSONObject(i).getString("lastname"));
-                                user.setUsername(response.getJSONObject(i).getString("username"));
-                                user.setPassword(response.getJSONObject(i).getString("password"));
-                                user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
-                                users.add(i,user);
-                                displayList.add(i,user.getFirstname() + " " + user.getPassword());
+                                Position position = new Position();
+                                position.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
+                                position.setParentId(Long.parseLong(response.getJSONObject(i).getString("parentId")));
+                                position.setLevel(Long.parseLong(response.getJSONObject(i).getString("level")));
+                                position.setName(response.getJSONObject(i).getString("name"));
+                                positions.add(i,position);
+                                displayList.add(i,position.getName() );
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -151,7 +142,7 @@ public class activity_user extends AppCompatActivity {
                 return view;
             }
         };
-        ListView listview = (ListView) findViewById(R.id.listNoob);
+        ListView listview = (ListView) findViewById(R.id.positionList);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,13 +150,13 @@ public class activity_user extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
-                Intent i = new Intent(activity_user.this, activity_user_detailes.class);
+                Intent i = new Intent(activity_position.this, activity_position_detailes.class);
                 i.putExtra("key2", position);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("key", users);
+                bundle.putSerializable("key", positions);
                 i.putExtras(bundle);
                 startActivity(i);
-                }
+            }
 
         });
 
@@ -182,7 +173,7 @@ public class activity_user extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem item = menu.findItem(R.id.main_menu_item_1);
-        item.setTitle("Add New User");
+        item.setTitle("Add New Position");
         item = menu.findItem(R.id.main_menu_item_2);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
@@ -193,9 +184,10 @@ public class activity_user extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1: startActivity(new Intent(activity_user.this, activity_create_user.class));
+            case R.id.main_menu_item_1: startActivity(new Intent(activity_position.this, activity_create_position.class));
         }
 
         return super.onOptionsItemSelected(item);
     }
 }
+

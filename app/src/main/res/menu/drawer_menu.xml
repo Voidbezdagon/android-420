@@ -11,6 +11,10 @@
             android:title="@string/Calendar"
             android:icon="@drawable/calendar">
         </item>
+        <item android:id="@+id/positions_view"
+            android:title="@string/Positions"
+            android:icon="@drawable/positions">
+        </item>
 
     </group>
 
