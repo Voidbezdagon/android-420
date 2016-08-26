@@ -1,5 +1,6 @@
 package cm.com.teamscheduler.app.app;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,17 +23,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.entity.Schedule;
 import cm.com.teamscheduler.app.entity.ScheduleReport;
+import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
  * Created by void on 22.08.16.
  */
-public class scheduleTest extends AppCompatActivity {
+public class scheduleDayList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +45,13 @@ public class scheduleTest extends AppCompatActivity {
 
         final ArrayList<Schedule> list= (ArrayList<Schedule>) getIntent().getSerializableExtra("schedules");
         final ArrayList<String> displayList = new ArrayList<String>();
+        final Long dateClicked = (Long) getIntent().getSerializableExtra("dateClicked");
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         for (Schedule s : list)
         {
             displayList.add(s.getTitle() + " " + s.getDescription());
         }
-
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);
         ListView listview = (ListView) findViewById(R.id.listNoob);
@@ -59,21 +63,12 @@ public class scheduleTest extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                setContentView(R.layout.schedule_selected_view);
-                TextView tv = (TextView) findViewById(R.id.schedule_title);
-                tv.setText(list.get(position).getTitle().toString());
-                TextView tv1 = (TextView) findViewById(R.id.schedule_description);
-                tv1.setText(list.get(position).getDescription().toString());
-                TextView tv2 = (TextView) findViewById(R.id.schedule_startdate);
-                tv2.setText(sdf.format(list.get(position).getStartDate()));
-                TextView tv3 = (TextView) findViewById(R.id.schedule_enddate);
-                tv3.setText(sdf.format(list.get(position).getEndDate()));
-                TextView tv4 = (TextView) findViewById(R.id.schedule_recurringtime);
-                tv4.setText(list.get(position).getRecurringTime().toString() + " Days");
-                TextView tv5 = (TextView) findViewById(R.id.schedule_assignedteam);
-                tv5.setText(list.get(position).getAssignedTeam().getTeamname().toString());
-                TextView tv6 = (TextView) findViewById(R.id.schedule_location);
-                tv6.setText(list.get(position).getLocation().getName().toString());
+                Intent i = new Intent(scheduleDayList.this, scheduleDetails.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("schedule", list.get(position));
+                bundle.putLong("dateClicked", dateClicked);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         });
     }
