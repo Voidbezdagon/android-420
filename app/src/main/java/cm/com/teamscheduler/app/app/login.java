@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
@@ -67,6 +68,11 @@ public class login extends AppCompatActivity {
                             user.setPassword(response.getString("password"));
                             user.setAdmin(Boolean.parseBoolean(response.getString("admin")));
                             user.setAccesskey(response.getString("accesskey"));
+                            //Set Position
+                                Position pos = new Position();
+                                pos.setId(Long.parseLong(response.getJSONObject("position").getString("id")));
+                                pos.setLevel(Long.parseLong(response.getJSONObject("position").getString("level")));
+                            user.setPosition(pos);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

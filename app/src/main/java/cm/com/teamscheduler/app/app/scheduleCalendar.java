@@ -301,9 +301,14 @@ public class scheduleCalendar extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                Intent i = new Intent(scheduleCalendar.this, scheduleTest.class);
+                Intent i = new Intent(scheduleCalendar.this, scheduleDayList.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("schedules", filteredList);
+                try {
+                    bundle.putLong("dateClicked", vsdf.parse(vsdf.format(dateClicked)).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 i.putExtras(bundle);
                 startActivity(i);
                 //List<Event> events = compactCalendarView.getEvents(dateClicked);
