@@ -24,6 +24,7 @@
         android:layout_width="fill_parent"
         android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         />
 
     <Button

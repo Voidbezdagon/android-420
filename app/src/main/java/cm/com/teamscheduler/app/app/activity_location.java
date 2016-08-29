@@ -1,10 +1,7 @@
 package cm.com.teamscheduler.app.app;
 
-import android.annotation.TargetApi;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,16 +28,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Location;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
-public class activity_user extends AppCompatActivity {
-    // Tag used to cancel the request
-    //LIST OF ARRAY STRINGS WHICH WILL SERVE AS LIST ITEMS
-    ArrayList<String> listItems=new ArrayList<String>();
-
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter;
+/**
+ * Created by kostadin on 29.08.16.
+ */
+public class activity_location extends AppCompatActivity {
 
     //FOR MENU
     DrawerLayout dLayout;
@@ -51,13 +46,13 @@ public class activity_user extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loggedin);
+        setContentView(R.layout.location_view);
 
         //TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("User List");
+        getSupportActionBar().setTitle("Location List");
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -69,16 +64,16 @@ public class activity_user extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_user.this, activity_user.class));
+                        startActivity(new Intent(activity_location.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_user.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_location.this,scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_user.this, activity_position.class));
+                        startActivity(new Intent(activity_location.this, activity_position.class));
                         break;
                     case R.id.location_view:
-                        startActivity(new Intent(activity_user.this, activity_location.class));
+                        startActivity(new Intent(activity_location.this, activity_location.class));
                         break;
                 }
 
@@ -90,10 +85,10 @@ public class activity_user extends AppCompatActivity {
 
         String tag_json_arry = "json_array_req";
 
-        String url = "http://10.0.2.2:8080/content/api/User/getAll";
+        String url = "http://10.0.2.2:8080/content/api/Location/getAll";
 
 
-        final ArrayList<User> users= new ArrayList<User>();
+        final ArrayList<Location> locations= new ArrayList<Location>();
         final ArrayList<String> displayList= new ArrayList<String>();
 
         JsonArrayRequest req = new JsonArrayRequest(url,
@@ -103,15 +98,19 @@ public class activity_user extends AppCompatActivity {
                         try {
                             for (int i = 0; i < response.length(); i++)
                             {
-                                User user = new User();
-                                user.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
-                                user.setFirstname(response.getJSONObject(i).getString("firstname"));
-                                user.setLastname(response.getJSONObject(i).getString("lastname"));
-                                user.setUsername(response.getJSONObject(i).getString("username"));
-                                user.setPassword(response.getJSONObject(i).getString("password"));
-                                user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
-                                users.add(i,user);
-                                displayList.add(i,user.getFirstname() + " " + user.getPassword());
+                                Location location = new Location();
+                                location.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
+                                location.setName(response.getJSONObject(i).getString("name"));
+                                location.setRegion(response.getJSONObject(i).getString("region"));
+                                location.setCity(response.getJSONObject(i).getString("city"));
+                                location.setZip(Integer.parseInt(response.getJSONObject(i).getString("zip")));
+                                location.setStreet(response.getJSONObject(i).getString("street"));
+                                location.setStreetNumber(Integer.parseInt(response.getJSONObject(i).getString("streetNumber")));
+                                location.setDetails(response.getJSONObject(i).getString("details"));
+                                location.setLat(Float.parseFloat(response.getJSONObject(i).getString("lat")));
+                                location.setLng(Float.parseFloat(response.getJSONObject(i).getString("lng")));
+                                locations.add(i,location);
+                                displayList.add(i,location.getName());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -151,7 +150,7 @@ public class activity_user extends AppCompatActivity {
                 return view;
             }
         };
-        ListView listview = (ListView) findViewById(R.id.listNoob);
+        ListView listview = (ListView) findViewById(R.id.location_list);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,17 +158,15 @@ public class activity_user extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
-                Intent i = new Intent(activity_user.this, activity_user_detailes.class);
+                Intent i = new Intent(activity_location.this, activity_location_details.class);
                 i.putExtra("key2", position);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("key", users);
+                bundle.putSerializable("key", locations);
                 i.putExtras(bundle);
                 startActivity(i);
-                }
+            }
 
         });
-
-
     }
     //DRAWER MENU
     @Override
@@ -182,7 +179,7 @@ public class activity_user extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem item = menu.findItem(R.id.main_menu_item_1);
-        item.setTitle("Add New User");
+        item.setTitle("Add New location");
         item = menu.findItem(R.id.main_menu_item_2);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
@@ -193,9 +190,9 @@ public class activity_user extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1: startActivity(new Intent(activity_user.this, activity_create_user.class));
+            case R.id.main_menu_item_1: startActivity(new Intent(activity_location.this, activity_create_location.class));
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

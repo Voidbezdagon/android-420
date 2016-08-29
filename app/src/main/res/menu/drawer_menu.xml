@@ -15,6 +15,10 @@
             android:title="@string/Positions"
             android:icon="@drawable/positions">
         </item>
+        <item android:id="@+id/location_view"
+            android:title="@string/Locations"
+            android:icon="@drawable/location">
+        </item>
 
     </group>
 
