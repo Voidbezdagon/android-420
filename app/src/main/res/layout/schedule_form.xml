@@ -8,10 +8,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:hint="Username"
-        android:textColorHint="#000"
+        android:textColorHint="#FFFFFF"
         android:ems="10"
         android:id="@+id/scheduleFormDescription"
-        android:textColor="#000"
+        android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="16dp"
@@ -22,6 +22,7 @@
         android:id="@+id/listScheduleActivities"
         android:layout_below="@+id/scheduleFormDescription"
         android:layout_width="fill_parent"
+        android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
         />
 
