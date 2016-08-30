@@ -41,6 +41,12 @@ public class activity_location_details extends AppCompatActivity implements OnMa
     NavigationView navigationView;
     //END
 
+    private ArrayList<Location> locations = null;
+    private int position = -1;
+    private Long parentId= -1l;
+
+
+
     //MAP
     private GoogleMap mMap;
     private Context context = this;
@@ -99,15 +105,16 @@ public class activity_location_details extends AppCompatActivity implements OnMa
 
 
         Bundle extras = getIntent().getExtras();
-        int position = -1;
 
-        ArrayList<Location> locations = (ArrayList<Location>) getIntent().getSerializableExtra("key");
+        locations = (ArrayList<Location>) getIntent().getSerializableExtra("key");
         position = extras.getInt("key2");
+
         //The key argument here must match that used in the other activity
         if(locations!=null) {
 
             TextView tv = (TextView) findViewById(R.id.location_id);
             tv.setText(locations.get(position).getId().toString());
+            parentId=locations.get(position).getId();
             tv = (TextView) findViewById(R.id.location_name);
             tv.setText(locations.get(position).getName());
             tv = (TextView) findViewById(R.id.location_region);
@@ -168,8 +175,13 @@ public class activity_location_details extends AppCompatActivity implements OnMa
                 break;
             case R.id.main_menu_item_2:startActivity(new Intent(activity_location_details.this, activity_position.class));
                 break;
-            case R.id.main_menu_item_3:startActivity(new Intent(activity_location_details.this, activity_location_items.class));
+            case R.id.main_menu_item_3:{
+                Intent i = new Intent(activity_location_details.this, activity_location_items.class);
+                i.putExtra("locationId", parentId);
+                startActivity(i);
                 break;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

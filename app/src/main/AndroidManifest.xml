@@ -69,6 +69,9 @@
         <activity
             android:name=".app.app.activity_location_items"
             android:label="@string/app_name"></activity>
+        <activity
+            android:name=".app.app.activity_location_items_details"
+            android:label="@string/app_name"></activity>
 
 
         <meta-data
