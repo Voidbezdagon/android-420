@@ -54,6 +54,9 @@ public class activity_create_position extends AppCompatActivity {
                     case R.id.positions_view:
                         startActivity(new Intent(activity_create_position.this, activity_position.class));
                         break;
+                    case R.id.location_view:
+                        startActivity(new Intent(activity_create_position.this, activity_location.class));
+                        break;
                 }
 
                 return false;

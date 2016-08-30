@@ -80,6 +80,9 @@ public class activity_location_details extends AppCompatActivity implements OnMa
                     case R.id.positions_view:
                         startActivity(new Intent(activity_location_details.this, activity_position.class));
                         break;
+                    case R.id.location_view:
+                        startActivity(new Intent(activity_location_details.this, activity_location.class));
+                        break;
                 }
 
                 return false;
@@ -151,6 +154,8 @@ public class activity_location_details extends AppCompatActivity implements OnMa
         item.setTitle("Edit Location");
         item = menu.findItem(R.id.main_menu_item_2);
         item.setTitle("Delete Location");
+        item = menu.findItem(R.id.main_menu_item_3);
+        item.setTitle("View Location Items");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -162,6 +167,8 @@ public class activity_location_details extends AppCompatActivity implements OnMa
             case R.id.main_menu_item_1:startActivity(new Intent(activity_location_details.this, activity_user.class));
                 break;
             case R.id.main_menu_item_2:startActivity(new Intent(activity_location_details.this, activity_position.class));
+                break;
+            case R.id.main_menu_item_3:startActivity(new Intent(activity_location_details.this, activity_location_items.class));
                 break;
         }
 

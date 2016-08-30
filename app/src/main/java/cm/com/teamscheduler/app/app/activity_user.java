@@ -185,6 +185,8 @@ public class activity_user extends AppCompatActivity {
         item.setTitle("Add New User");
         item = menu.findItem(R.id.main_menu_item_2);
         item.setVisible(false);
+        item = menu.findItem(R.id.main_menu_item_3);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

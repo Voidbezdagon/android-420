@@ -57,6 +57,9 @@ public class activity_position_detailes extends AppCompatActivity {
                     case R.id.positions_view:
                         startActivity(new Intent(activity_position_detailes.this, activity_position.class));
                         break;
+                    case R.id.location_view:
+                        startActivity(new Intent(activity_position_detailes.this, activity_location.class));
+                        break;
                 }
 
                 return false;
@@ -97,6 +100,8 @@ public class activity_position_detailes extends AppCompatActivity {
         item.setTitle("Edit Position");
         item = menu.findItem(R.id.main_menu_item_2);
         item.setTitle("Delete Position");
+        item = menu.findItem(R.id.main_menu_item_3);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
