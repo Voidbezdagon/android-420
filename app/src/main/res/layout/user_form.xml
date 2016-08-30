@@ -6,14 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <RelativeLayout
         android:id="@+id/top_buttonlayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="horizontal"
-        android:background="@drawable/bg"
+        android:background="#808080"
         >
         <include layout="@layout/toolbar"
             android:id="@+id/toolbar"/>
@@ -49,6 +47,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userFormPassword"
+            android:hint="Confirm Password"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/userFormConfirmPassword"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userFormConfirmPassword"
             android:hint="First Name"
             android:textColorHint="#fff"
             android:ems="10"
@@ -73,14 +85,33 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             />
+
+        <Spinner
+            android:id="@+id/userFormAdmin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userFormLastName"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <Spinner
+            android:id="@+id/userFormPosition"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userFormAdmin"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:id="@+id/buttonLogIn"
+            android:id="@+id/buttonSaveUser"
             android:background="#fff"
             android:layout_marginTop="61dp"
-            android:layout_below="@+id/userFormLastName"
+            android:layout_below="@+id/userFormPosition"
             android:layout_centerHorizontal="true"
             android:onClick="saveUser" />
 
