@@ -13,13 +13,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
 import cm.com.teamscheduler.app.entity.User;
+import cm.com.teamscheduler.app.utils.Auth;
 
 
 public class activity_user_detailes extends AppCompatActivity {
@@ -28,6 +46,7 @@ public class activity_user_detailes extends AppCompatActivity {
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    Long userId;
     //END
 
     @Override
@@ -41,8 +60,6 @@ public class activity_user_detailes extends AppCompatActivity {
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("User Profile");
-
-
 
 
         //MENU & TOOLBAR
@@ -83,7 +100,7 @@ public class activity_user_detailes extends AppCompatActivity {
         position = extras.getInt("key2");
             //The key argument here must match that used in the other activity
         if(users!=null) {
-
+            userId = users.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.user_id);
             tv.setText(users.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.user_firstname);
@@ -123,11 +140,45 @@ public class activity_user_detailes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1: startActivity(new Intent(activity_user_detailes.this, activity_user.class));
+            case R.id.main_menu_item_1:
+                {
+                    Intent i = new Intent(activity_user_detailes.this, activity_edit_user.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("userId", userId);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
                 break;
-            case R.id. main_menu_item_2: startActivity(new Intent(activity_user_detailes.this, activity_user.class));
+            case R.id.main_menu_item_2:
+                {
+                    String tag_json_obj = "json_obj_req";
+                    String url2 = "http://10.0.2.2:8080/content/api/User/delete/" + userId;
+                    System.out.println(url2);
+                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                            url2, null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    startActivity(new Intent(activity_user_detailes.this, activity_user.class));
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("mazen hui");
+                        }
+                    }){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/json");
+                            headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                            return headers;
+                        }
+                    };
+                    AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+                }
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -64,6 +64,7 @@ public class login extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         User user = new User();
                         try {
+                            user.setId(Long.parseLong(response.getString("id")));
                             user.setUsername(response.getString("username"));
                             user.setPassword(response.getString("password"));
                             user.setAdmin(Boolean.parseBoolean(response.getString("admin")));

@@ -1,59 +1,43 @@
 package cm.com.teamscheduler.app.app;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
-import cm.com.teamscheduler.app.entity.Location;
 import cm.com.teamscheduler.app.entity.Position;
-import cm.com.teamscheduler.app.entity.Schedule;
-import cm.com.teamscheduler.app.entity.ScheduleActivity;
-import cm.com.teamscheduler.app.entity.ScheduleActivityReport;
-import cm.com.teamscheduler.app.entity.ScheduleReport;
-import cm.com.teamscheduler.app.entity.Team;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
-public class activity_create_user extends AppCompatActivity{
-
+/**
+ * Created by void on 30.08.16.
+ */
+public class activity_edit_user extends AppCompatActivity {
     ArrayList<String> displayList;
     ArrayList<String> adminList;
     Spinner spinnerPosition;
@@ -82,27 +66,26 @@ public class activity_create_user extends AppCompatActivity{
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, dLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         dLayout.setDrawerListener(actionBarDrawerToggle);
-        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_create_user.this, activity_user.class));
+                        startActivity(new Intent(activity_edit_user.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_create_user.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_edit_user.this, scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_create_user.this, activity_position.class));
+                        startActivity(new Intent(activity_edit_user.this, activity_position.class));
                         break;
                     case R.id.location_view:
-                        startActivity(new Intent(activity_create_user.this, activity_location.class));
+                        startActivity(new Intent(activity_edit_user.this, activity_location.class));
                         break;
                 }
-
                 return false;
             }
         });
@@ -155,6 +138,47 @@ public class activity_create_user extends AppCompatActivity{
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         //End of JSON Position GetAll request
 
+        //Begin get user request
+        String tag_json_obj = "json_obj_req";
+        String url2 = "http://10.0.2.2:8080/content/api/User/get/" + getIntent().getLongExtra("userId", 0);
+        System.out.println(url2);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url2, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            EditText un = (EditText) findViewById(R.id.userFormUsername);
+                            un.setText(response.getString("username"));
+                            EditText pw = (EditText) findViewById(R.id.userFormPassword);
+                            pw.setText(response.getString("password"));
+                            EditText fn = (EditText) findViewById(R.id.userFormFirstName);
+                            fn.setText(response.getString("firstname"));
+                            EditText ln = (EditText) findViewById(R.id.userFormLastName);
+                            ln.setText(response.getString("lastname"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("mazen hui");
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        //End get user request
+
+        //Begin submit Edit request
         Button submitReport = (Button) findViewById(R.id.buttonSaveUser);
 
         submitReport.setOnClickListener(new Button.OnClickListener(){
@@ -167,6 +191,7 @@ public class activity_create_user extends AppCompatActivity{
                 JSONObject js = new JSONObject();
                 try
                 {
+                    js.put("id", getIntent().getLongExtra("userId", 0));
                     EditText un = (EditText) findViewById(R.id.userFormUsername);
                     js.put("username", un.getText().toString());
                     EditText pw = (EditText) findViewById(R.id.userFormPassword);
@@ -190,7 +215,7 @@ public class activity_create_user extends AppCompatActivity{
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Intent i = new Intent(activity_create_user.this, activity_user.class);
+                                Intent i = new Intent(activity_edit_user.this, activity_user.class);
                                 startActivity(i);
                             }
                         }, new Response.ErrorListener() {
@@ -212,8 +237,8 @@ public class activity_create_user extends AppCompatActivity{
                 //System.out.println(jsonObjReq);
             }
         });
+        //End submit Edit request
     }
-
     //DRAWER MENU
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
