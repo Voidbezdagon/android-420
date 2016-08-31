@@ -11,6 +11,10 @@
             android:title="@string/Calendar"
             android:icon="@drawable/calendar">
         </item>
+        <item android:id="@+id/schedule_view"
+            android:title="@string/Schedules"
+            android:icon="@drawable/schedule">
+        </item>
         <item android:id="@+id/positions_view"
             android:title="@string/Positions"
             android:icon="@drawable/positions">
@@ -19,6 +23,11 @@
             android:title="@string/Locations"
             android:icon="@drawable/location">
         </item>
+        <item android:id="@+id/team_view"
+            android:title="@string/Teams"
+            android:icon="@drawable/team">
+        </item>
+
 
     </group>
 

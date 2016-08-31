@@ -83,6 +83,9 @@ public class activity_location_details extends AppCompatActivity implements OnMa
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_location_details.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_location_details.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_location_details.this, activity_position.class));
                         break;

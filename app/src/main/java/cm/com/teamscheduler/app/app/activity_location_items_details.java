@@ -71,6 +71,9 @@ public class activity_location_items_details extends AppCompatActivity {
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_location_items_details.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_location_items_details.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_location_items_details.this, activity_position.class));
                         break;

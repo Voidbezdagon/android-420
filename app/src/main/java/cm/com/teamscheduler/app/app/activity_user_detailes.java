@@ -60,6 +60,9 @@ public class activity_user_detailes extends AppCompatActivity {
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_user_detailes.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_user_detailes.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_user_detailes.this, activity_position.class));
                         break;
