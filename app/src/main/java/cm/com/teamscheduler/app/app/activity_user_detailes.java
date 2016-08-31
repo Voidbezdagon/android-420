@@ -113,6 +113,8 @@ public class activity_user_detailes extends AppCompatActivity {
             tv.setText(users.get(position).getPassword());
             tv = (TextView) findViewById(R.id.user_admin);
             tv.setText(users.get(position).getAdmin().toString());
+            tv= (TextView) findViewById(R.id.user_position);
+            tv.setText(users.get(position).getPosition().getName());
         }
     }
 

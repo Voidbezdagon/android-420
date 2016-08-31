@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
+import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
@@ -110,12 +111,15 @@ public class activity_user extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++)
                             {
                                 User user = new User();
+                                Position position = new Position();
                                 user.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
                                 user.setFirstname(response.getJSONObject(i).getString("firstname"));
                                 user.setLastname(response.getJSONObject(i).getString("lastname"));
                                 user.setUsername(response.getJSONObject(i).getString("username"));
                                 user.setPassword(response.getJSONObject(i).getString("password"));
                                 user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
+                                position.setName(response.getJSONObject(i).getJSONObject("position").getString("name"));
+                                user.setPosition(position);
                                 users.add(i,user);
                                 displayList.add(i,user.getFirstname() + " " + user.getPassword());
                             }
