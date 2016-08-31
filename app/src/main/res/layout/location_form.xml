@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/top_buttonlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:background="#808080"
+        >
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:hint="Name"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormName"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormName"
+            android:hint="Region"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormRegion"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormRegion"
+            android:hint="City"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormCity"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormCity"
+            android:hint="Zip"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormZip"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormZip"
+            android:hint="Street"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormStreet"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormStreet"
+            android:hint="Street Number"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormStreetNumber"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationFormStreetNumber"
+            android:hint="Details"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationFormDetails"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Save"
+            android:id="@+id/buttonSaveLocation"
+            android:background="#fff"
+            android:layout_marginTop="5.5dp"
+            android:layout_below="@+id/locationFormMap"
+            android:layout_centerHorizontal="true" />
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/locationFormMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_below="@+id/locationFormDetails"
+            tools:context="cm.com.teamscheduler.app.app.activity_create_location"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/navigation_view"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/navigarion_drawer_header">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

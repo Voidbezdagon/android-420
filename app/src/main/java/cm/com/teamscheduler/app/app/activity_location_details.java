@@ -16,6 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,11 +30,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
 import cm.com.teamscheduler.app.entity.Location;
 import cm.com.teamscheduler.app.entity.Position;
+import cm.com.teamscheduler.app.utils.Auth;
 
 /**
  * Created by kostadin on 29.08.16.
@@ -41,11 +51,11 @@ public class activity_location_details extends AppCompatActivity implements OnMa
     NavigationView navigationView;
     //END
 
+    Long locationId;
+
     private ArrayList<Location> locations = null;
     private int position = -1;
     private Long parentId= -1l;
-
-
 
     //MAP
     private GoogleMap mMap;
@@ -64,9 +74,6 @@ public class activity_location_details extends AppCompatActivity implements OnMa
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("Location");
-
-
-
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -114,7 +121,7 @@ public class activity_location_details extends AppCompatActivity implements OnMa
 
         //The key argument here must match that used in the other activity
         if(locations!=null) {
-
+            locationId = locations.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.location_id);
             tv.setText(locations.get(position).getId().toString());
             parentId=locations.get(position).getId();
@@ -174,9 +181,43 @@ public class activity_location_details extends AppCompatActivity implements OnMa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1:startActivity(new Intent(activity_location_details.this, activity_user.class));
+            case R.id.main_menu_item_1:
+                {
+                    Intent i = new Intent(activity_location_details.this, activity_edit_location.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("locationId", locationId);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
                 break;
-            case R.id.main_menu_item_2:startActivity(new Intent(activity_location_details.this, activity_position.class));
+            case R.id.main_menu_item_2:
+                {
+                    String tag_json_obj = "json_obj_req";
+                    String url2 = "http://10.0.2.2:8080/content/api/Location/delete/" + locationId;
+                    System.out.println(url2);
+                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                            url2, null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    startActivity(new Intent(activity_location_details.this, activity_location.class));
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("mazen hui");
+                        }
+                    }){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/json");
+                            headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                            return headers;
+                        }
+                    };
+                    AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+                }
                 break;
             case R.id.main_menu_item_3:{
                 Intent i = new Intent(activity_location_details.this, activity_location_items.class);
