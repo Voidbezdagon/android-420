@@ -25,6 +25,7 @@ public class ScheduleActivity implements Serializable {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
     }

@@ -121,9 +121,6 @@ public class activity_team extends AppCompatActivity {
                                     User user = new User();
                                     user.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("id")));
                                     user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("admin")));
-                                    //Setting Position to User
-
-
                                     user.setUsername(response.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("username"));
                                     user.setFirstname(response.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("firstname"));
                                     user.setLastname(response.getJSONObject(i).getJSONArray("users").getJSONObject(j).getString("lastname"));
