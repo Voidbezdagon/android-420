@@ -12,16 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,7 +27,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,9 +41,9 @@ import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
- * Created by kostadin on 29.08.16.
+ * Created by void on 31.08.16.
  */
-public class activity_create_location extends AppCompatActivity implements OnMapReadyCallback {
+public class activity_edit_location extends AppCompatActivity implements OnMapReadyCallback {
     ArrayList<Position> list;
     private GoogleMap mMap;
     private Double lat;
@@ -70,7 +66,7 @@ public class activity_create_location extends AppCompatActivity implements OnMap
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Create Location");
+        getSupportActionBar().setTitle("Edit Location");
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -82,16 +78,16 @@ public class activity_create_location extends AppCompatActivity implements OnMap
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_create_location.this, activity_user.class));
+                        startActivity(new Intent(activity_edit_location.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_create_location.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_edit_location.this,scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_create_location.this, activity_position.class));
+                        startActivity(new Intent(activity_edit_location.this, activity_position.class));
                         break;
                     case R.id.location_view:
-                        startActivity(new Intent(activity_create_location.this, activity_location.class));
+                        startActivity(new Intent(activity_edit_location.this, activity_location.class));
                         break;
                 }
 
@@ -99,6 +95,52 @@ public class activity_create_location extends AppCompatActivity implements OnMap
             }
         });
         //END OF MENU
+
+        //Begin get location request
+        String tag_json_obj = "json_obj_req";
+        String url2 = "http://10.0.2.2:8080/content/api/Location/get/" + getIntent().getLongExtra("locationId", 0);
+        System.out.println(url2);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url2, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            EditText lfn = (EditText) findViewById(R.id.locationFormName);
+                            lfn.setText(response.getString("name"));
+                            EditText lfr = (EditText) findViewById(R.id.locationFormRegion);
+                            lfr.setText(response.getString("region"));
+                            EditText lfc = (EditText) findViewById(R.id.locationFormCity);
+                            lfc.setText(response.getString("city"));
+                            EditText lfz = (EditText) findViewById(R.id.locationFormZip);
+                            lfz.setText(response.getString("zip"));
+                            EditText lfs = (EditText) findViewById(R.id.locationFormStreet);
+                            lfs.setText(response.getString("street"));
+                            EditText lfsn = (EditText) findViewById(R.id.locationFormStreetNumber);
+                            lfsn.setText(response.getString("streetNumber"));
+                            EditText lfd = (EditText) findViewById(R.id.locationFormDetails);
+                            lfd.setText(response.getString("details"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("mazen hui");
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        //End get location request
 
         //Google Map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -125,6 +167,7 @@ public class activity_create_location extends AppCompatActivity implements OnMap
                         JSONObject js = new JSONObject();
                         try
                         {
+                            js.put("id", getIntent().getLongExtra("locationId", 0));
                             EditText lfn = (EditText) findViewById(R.id.locationFormName);
                             js.put("name", lfn.getText().toString());
                             EditText lfr = (EditText) findViewById(R.id.locationFormRegion);
@@ -153,7 +196,7 @@ public class activity_create_location extends AppCompatActivity implements OnMap
                                 new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(JSONObject response) {
-                                        Intent i = new Intent(activity_create_location.this, activity_location.class);
+                                        Intent i = new Intent(activity_edit_location.this, activity_location.class);
                                         startActivity(i);
                                     }
                                 }, new Response.ErrorListener() {
@@ -199,6 +242,7 @@ public class activity_create_location extends AppCompatActivity implements OnMap
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             lat = address.getLatitude();
             lng = address.getLongitude();
+            mMap.clear();
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17.0f));
         }
@@ -209,29 +253,6 @@ public class activity_create_location extends AppCompatActivity implements OnMap
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
-    }
-
-    private void onSuccessResponse()
-    {
-        /*spinnerPosition = (Spinner) findViewById(R.id.userFormPosition);
-        adapterPosition = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, displayList);
-        adapterPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPosition.setAdapter(adapterPosition);
-
-        spinnerAdmin = (Spinner) findViewById(R.id.userFormAdmin);
-        adapterAdmin = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, adminList);
-        adapterAdmin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdmin.setAdapter(adapterAdmin);*/
-    }
-
-    private Long getPositionId(String name)
-    {
-        for (Position pos : list)
-        {
-            if (name.equals(pos.getName()))
-                return pos.getId();
-        }
-        return null;
     }
 
     @Override
