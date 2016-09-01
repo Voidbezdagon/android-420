@@ -76,7 +76,7 @@ public class activity_user extends AppCompatActivity {
                         startActivity(new Intent(activity_user.this,scheduleCalendar.class));
                         break;
                     case R.id.schedule_view:
-                        startActivity(new Intent(activity_user.this,activity_create_schedule.class)); //TODO SAMO ZA TEST POSLE DA SE VURNE OBRATNO
+                        startActivity(new Intent(activity_user.this,activity_schedule.class));
                         break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_user.this, activity_position.class));

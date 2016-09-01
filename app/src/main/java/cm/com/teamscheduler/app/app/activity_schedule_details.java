@@ -23,6 +23,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,19 +44,21 @@ public class activity_schedule_details extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     Long scheduleId;
+
     //END
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.team_details);
+        setContentView(R.layout.schedule_details);
 
         //TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle("Schedule Profile");
+        getSupportActionBar().setTitle("Schedule Details");
 
 
         //MENU & TOOLBAR
@@ -91,68 +95,35 @@ public class activity_schedule_details extends AppCompatActivity {
         });
 
         //END OF MENU
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Bundle extras = getIntent().getExtras();
         int position = -1;
         final ArrayList<String> displayUsers = new ArrayList<String>();
         final ArrayList<String> displaySchedules = new ArrayList<String>();
-        ArrayList<Team> teams = (ArrayList<Team>) getIntent().getSerializableExtra("key");
-        ArrayList<User> users;
-        ArrayList<Schedule> schedules;
+        ArrayList<Schedule> schedules = (ArrayList<Schedule>) getIntent().getSerializableExtra("key");
         position = extras.getInt("key2");
         //The key argument here must match that used in the other activity
-        if(teams!=null) {
-            scheduleId = teams.get(position).getId();
-            TextView tv = (TextView) findViewById(R.id.team_id);
-            tv.setText(teams.get(position).getId().toString());
-            tv = (TextView) findViewById(R.id.team_teamname);
-            tv.setText(teams.get(position).getTeamname());
-            users = (ArrayList<User>) teams.get(position).getUsers();
-            for(User user : users){
-                displayUsers.add(user.getFirstname() + " " + user.getLastname());
-            }
-            schedules = (ArrayList<Schedule>) teams.get(position).getSchedules();
-            for(Schedule schedule : schedules){
-                displaySchedules.add(schedule.getTitle());
-            }
+        if(schedules!=null) {
+            scheduleId = schedules.get(position).getId();
+            TextView tv = (TextView) findViewById(R.id.schedule_id);
+            tv.setText(schedules.get(position).getId().toString());
+            tv = (TextView) findViewById(R.id.schedule_title);
+            tv.setText(schedules.get(position).getTitle());
+            tv = (TextView) findViewById(R.id.schedule_description);
+            tv.setText(schedules.get(position).getDescription());
+            tv = (TextView) findViewById(R.id.schedule_startdate);
+            tv.setText(sdf.format(schedules.get(position).getStartDate()));
+            tv = (TextView) findViewById(R.id.schedule_enddate);
+            tv.setText(sdf.format(schedules.get(position).getEndDate()));
+            tv = (TextView) findViewById(R.id.schedule_recurringtime);
+            tv.setText(schedules.get(position).getRecurringTime().toString());
+            tv = (TextView) findViewById(R.id.schedule_assignedteam);
+            tv.setText(schedules.get(position).getAssignedTeam().getTeamname());
+            tv = (TextView) findViewById(R.id.schedule_location);
+            tv.setText(schedules.get(position).getLocation().getName());
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayUsers){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
 
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        ListView listview = (ListView) findViewById(R.id.team_users);
-        listview.setAdapter(adapter);
-
-        adapter = new ArrayAdapter(this, R.layout.custom_text, displaySchedules){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        listview = (ListView) findViewById(R.id.team_schedule);
-        listview.setAdapter(adapter);
     }
 
     @Override

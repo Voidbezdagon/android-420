@@ -178,6 +178,28 @@
             android:layout_marginTop="17dp"
             android:layout_marginLeft="8dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedule_location_label"
+            android:textColor="#ffffff"
+            android:text="Location:"
+            android:textSize="17sp"
+            android:layout_below="@+id/schedule_assignedteam"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedule_location"
+            android:textColor="#FFFFFF"
+            android:text=""
+            android:textSize="20sp"
+            android:layout_below="@+id/schedule_assignedteam"
+            android:layout_toRightOf="@+id/schedule_location_label"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="8dp"/>
 
 
 
