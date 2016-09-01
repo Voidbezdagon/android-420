@@ -11,10 +11,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
 import cm.com.teamscheduler.app.entity.Position;
+import cm.com.teamscheduler.app.utils.Auth;
 
 public class activity_position_detailes extends AppCompatActivity {
 
@@ -23,6 +34,7 @@ public class activity_position_detailes extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     //END
+    Long positionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +89,7 @@ public class activity_position_detailes extends AppCompatActivity {
         position = extras.getInt("key2");
         //The key argument here must match that used in the other activity
         if(positions!=null) {
-
+            positionId = positions.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.position_id);
             tv.setText(positions.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.position_name);
@@ -113,9 +125,43 @@ public class activity_position_detailes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1:startActivity(new Intent(activity_position_detailes.this, activity_user.class));
+            case R.id.main_menu_item_1:
+                {
+                    Intent i = new Intent(activity_position_detailes.this, activity_edit_position.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("positionId", positionId);
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
                 break;
-            case R.id.main_menu_item_2:startActivity(new Intent(activity_position_detailes.this, activity_position.class));
+            case R.id.main_menu_item_2:
+                {
+                    String tag_json_obj = "json_obj_req";
+                    String url2 = "http://10.0.2.2:8080/content/api/Position/delete/" + positionId;
+                    System.out.println(url2);
+                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                            url2, null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    startActivity(new Intent(activity_position_detailes.this, activity_position.class));
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("mazen hui");
+                        }
+                    }){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/json");
+                            headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                            return headers;
+                        }
+                    };
+                    AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+                }
                 break;
         }
 

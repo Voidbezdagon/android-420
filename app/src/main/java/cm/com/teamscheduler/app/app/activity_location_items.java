@@ -195,7 +195,14 @@ public class activity_location_items extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1: startActivity(new Intent(activity_location_items.this, activity_create_location_item.class));
+            case R.id.main_menu_item_1:
+            {
+                Bundle extras = getIntent().getExtras();
+                Intent i = new Intent(activity_location_items.this, activity_create_location_item.class);
+                i.putExtra("locationId", extras.getLong("locationId"));
+                startActivity(i);
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);

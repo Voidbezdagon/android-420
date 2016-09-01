@@ -52,6 +52,9 @@
             android:name=".app.app.activity_create_position"
             android:label="@string/app_name" />
         <activity
+            android:name=".app.app.activity_edit_position"
+            android:label="@string/app_name" />
+        <activity
             android:name=".app.app.scheduleDayList"
             android:label="@string/app_name" />
         <activity
@@ -70,7 +73,13 @@
             android:name=".app.app.activity_create_location"
             android:label="@string/app_name" />
         <activity
+            android:name=".app.app.activity_create_location_item"
+            android:label="@string/app_name" />
+        <activity
             android:name=".app.app.activity_edit_location"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".app.app.activity_edit_location_item"
             android:label="@string/app_name" />
         <activity
             android:name=".app.app.activity_location_items"
@@ -95,6 +104,9 @@
             android:label="@string/app_name"></activity>
         <activity
             android:name=".app.app.activity_create_schedule"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".app.app.activity_edit_schedule"
             android:label="@string/app_name"></activity>
 
         <meta-data

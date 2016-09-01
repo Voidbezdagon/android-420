@@ -34,9 +34,9 @@ import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
- * Created by kostadin on 26.08.16.
+ * Created by void on 01.09.16.
  */
-public class activity_create_position extends AppCompatActivity {
+public class activity_edit_position extends AppCompatActivity {
 
     ArrayList<String> displayList;
     Spinner spinnerPosition;
@@ -71,16 +71,16 @@ public class activity_create_position extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_create_position.this, activity_user.class));
+                        startActivity(new Intent(activity_edit_position.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_create_position.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_edit_position.this,scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_create_position.this, activity_position.class));
+                        startActivity(new Intent(activity_edit_position.this, activity_position.class));
                         break;
                     case R.id.location_view:
-                        startActivity(new Intent(activity_create_position.this, activity_location.class));
+                        startActivity(new Intent(activity_edit_position.this, activity_location.class));
                         break;
                 }
                 return false;
@@ -132,6 +132,40 @@ public class activity_create_position extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
         //End of JSON Position GetAll request
 
+        //Begin get position request
+        String tag_json_obj = "json_obj_req";
+        String url2 = "http://10.0.2.2:8080/content/api/Position/get/" + getIntent().getLongExtra("positionId", 0);
+        System.out.println(url2);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url2, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            EditText pn = (EditText) findViewById(R.id.positionFormName);
+                            pn.setText(response.getString("name"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("mazen hui");
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        //End get position request
+
         Button save = (Button) findViewById(R.id.buttonSavePosition);
 
         save.setOnClickListener(new Button.OnClickListener(){
@@ -143,6 +177,7 @@ public class activity_create_position extends AppCompatActivity {
                 JSONObject js = new JSONObject();
                 try
                 {
+                    js.put("id", getIntent().getLongExtra("positionId", 0));
                     EditText pn = (EditText) findViewById(R.id.positionFormName);
                     js.put("name", pn.getText().toString());
                     js.put("parentId", getPositionId(spinnerPosition.getSelectedItem().toString()));
@@ -159,7 +194,7 @@ public class activity_create_position extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Intent i = new Intent(activity_create_position.this, activity_position.class);
+                                Intent i = new Intent(activity_edit_position.this, activity_position.class);
                                 startActivity(i);
                             }
                         }, new Response.ErrorListener() {
