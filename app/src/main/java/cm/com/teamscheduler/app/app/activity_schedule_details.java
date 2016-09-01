@@ -41,7 +41,7 @@ public class activity_schedule_details extends AppCompatActivity {
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    Long userId;
+    Long scheduleId;
     //END
 
     @Override
@@ -54,7 +54,7 @@ public class activity_schedule_details extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle("Team Profile");
+        getSupportActionBar().setTitle("Schedule Profile");
 
 
         //MENU & TOOLBAR
@@ -101,7 +101,7 @@ public class activity_schedule_details extends AppCompatActivity {
         position = extras.getInt("key2");
         //The key argument here must match that used in the other activity
         if(teams!=null) {
-            userId = teams.get(position).getId();
+            scheduleId = teams.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.team_id);
             tv.setText(teams.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.team_teamname);
@@ -166,9 +166,9 @@ public class activity_schedule_details extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem item = menu.findItem(R.id.main_menu_item_1);
-        item.setTitle("Edit Team");
+        item.setTitle("Edit Schedule");
         item = menu.findItem(R.id.main_menu_item_2);
-        item.setTitle("Delete Team");
+        item.setTitle("Delete Schedule");
         item = menu.findItem(R.id.main_menu_item_3);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
@@ -181,9 +181,9 @@ public class activity_schedule_details extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.main_menu_item_1:
             {
-                Intent i = new Intent(activity_schedule_details.this, activity_edit_user.class);
+                Intent i = new Intent(activity_schedule_details.this, activity_edit_schedule.class);
                 Bundle bundle = new Bundle();
-                bundle.putLong("userId", userId);
+                bundle.putLong("scheduleId", scheduleId);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -191,14 +191,14 @@ public class activity_schedule_details extends AppCompatActivity {
             case R.id.main_menu_item_2:
             {
                 String tag_json_obj = "json_obj_req";
-                String url2 = "http://10.0.2.2:8080/content/api/User/delete/" + userId;
+                String url2 = "http://10.0.2.2:8080/content/api/Schedule/delete/" + scheduleId;
                 System.out.println(url2);
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
                         url2, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                startActivity(new Intent(activity_schedule_details.this, activity_user.class));
+                                startActivity(new Intent(activity_schedule_details.this, activity_schedule.class));
                             }
                         }, new Response.ErrorListener() {
                     @Override

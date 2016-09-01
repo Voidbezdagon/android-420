@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/top_buttonlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:background="#808080"
+        >
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:hint="Title"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/scheduleFormTitle"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scheduleFormTitle"
+            android:hint="Description"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/scheduleFormDescription"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scheduleFormDescription"
+            android:hint="Recurring Time"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/scheduleFormRecurringTime"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+
+        <Spinner
+            android:id="@+id/scheduleFormAssignedTeam"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scheduleFormRecurringTime"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <Spinner
+            android:id="@+id/scheduleFormLocation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scheduleFormAssignedTeam"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scheduleFormStartDate"
+            android:layout_below="@+id/scheduleFormLocation"
+            android:textColor="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textAlignment="center"
+            android:gravity="center_vertical"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Start Date"
+            android:id="@+id/buttonScheduleFormStartDate"
+            android:background="#fff"
+            android:layout_below="@+id/scheduleFormStartDate"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginRight="16dp"
+            android:onClick="showStartDatePickerDialog"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Start Time"
+            android:id="@+id/buttonScheduleFormStartTime"
+            android:background="#fff"
+            android:layout_below="@+id/scheduleFormStartDate"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/buttonScheduleFormStartDate"
+            android:onClick="showStartTimePickerDialog"
+            />
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scheduleFormEndDate"
+            android:layout_below="@+id/buttonScheduleFormStartTime"
+            android:textColor="#FFFFFF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textAlignment="center"
+            android:gravity="center_vertical"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="End Date"
+            android:id="@+id/buttonScheduleFormEndDate"
+            android:background="#fff"
+            android:layout_below="@+id/scheduleFormEndDate"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginRight="16dp"
+            android:onClick="showEndDatePickerDialog"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="End Time"
+            android:id="@+id/buttonScheduleFormEndTime"
+            android:background="#fff"
+            android:layout_below="@+id/scheduleFormEndDate"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/buttonScheduleFormEndDate"
+            android:onClick="showEndTimePickerDialog"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Save"
+            android:id="@+id/buttonSaveSchedule"
+            android:background="#fff"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/buttonScheduleFormEndDate"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/navigation_view"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/navigarion_drawer_header">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>
