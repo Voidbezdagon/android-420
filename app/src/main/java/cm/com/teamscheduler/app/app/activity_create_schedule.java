@@ -81,7 +81,7 @@ public class activity_create_schedule extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Create User");
+        getSupportActionBar().setTitle("Create Schedule");
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

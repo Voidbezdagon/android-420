@@ -20,32 +20,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:hint="Name of position"
+            android:hint="Name"
             android:textColorHint="#fff"
             android:ems="10"
-            android:id="@+id/positionFormName"
+            android:id="@+id/locationItemFormName"
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
-        <Spinner
-            android:id="@+id/positionFormParentId"
-            android:layout_width="fill_parent"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/positionFormName"
-            android:layout_marginTop="16dp"
+            android:layout_below="@+id/locationItemFormName"
+            android:hint="Floor"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationItemFormFloor"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationItemFormFloor"
+            android:hint="Number"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationItemFormNumber"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationItemFormNumber"
+            android:hint="Details"
+            android:textColorHint="#fff"
+            android:ems="10"
+            android:id="@+id/locationItemFormDetails"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:id="@+id/buttonSavePosition"
+            android:id="@+id/buttonSaveLocationItem"
             android:background="#fff"
             android:layout_marginTop="61dp"
-            android:layout_below="@+id/positionFormParentId"
+            android:layout_below="@+id/locationItemFormDetails"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>

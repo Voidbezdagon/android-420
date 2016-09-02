@@ -13,12 +13,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.GoogleMap;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cm.com.teamscheduler.R;
 import cm.com.teamscheduler.app.entity.LocationItem;
+import cm.com.teamscheduler.app.utils.Auth;
 
 /**
  * Created by kostadin on 30.08.16.
@@ -29,6 +39,7 @@ public class activity_location_items_details extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     //END
+    Long locationItemId;
 
     private ArrayList<LocationItem> locationItems = null;
     private int position = -1;
@@ -98,7 +109,7 @@ public class activity_location_items_details extends AppCompatActivity {
 
         //The key argument here must match that used in the other activity
         if(locationItems!=null) {
-
+            locationItemId = locationItems.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.location_item_id);
             tv.setText(locationItems.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.location_item_name);
@@ -138,10 +149,44 @@ public class activity_location_items_details extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1:startActivity(new Intent(activity_location_items_details.this, activity_user.class));
-                break;
-            case R.id.main_menu_item_2:startActivity(new Intent(activity_location_items_details.this, activity_position.class));
-                break;
+            case R.id.main_menu_item_1:
+            {
+                Intent i = new Intent(activity_location_items_details.this, activity_edit_location_item.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("locationItemId", locationItemId);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+            break;
+            case R.id.main_menu_item_2:
+            {
+                String tag_json_obj = "json_obj_req";
+                String url2 = "http://10.0.2.2:8080/content/api/LocationItem/delete/" + locationItemId;
+                System.out.println(url2);
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
+                        url2, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                startActivity(new Intent(activity_location_items_details.this, activity_location.class));
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("mazen hui");
+                    }
+                }){
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+            }
+            break;
         }
 
         return super.onOptionsItemSelected(item);

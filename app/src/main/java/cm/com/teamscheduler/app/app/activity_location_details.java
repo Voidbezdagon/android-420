@@ -55,7 +55,7 @@ public class activity_location_details extends AppCompatActivity implements OnMa
 
     private ArrayList<Location> locations = null;
     private int position = -1;
-    private Long parentId= -1l;
+    private Long parentId = -1l;
 
     //MAP
     private GoogleMap mMap;
