@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#808080">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="@drawable/bg"
+        >
+
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -33,7 +47,17 @@
         android:id="@+id/buttonSubmitReport"
         android:background="#fff"
         android:layout_marginTop="61dp"
-        android:layout_below="@+id/ScheduleActivities"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/listScheduleActivities"
+        android:layout_centerHorizontal="true"
         android:onClick="submitReport" />
-</LinearLayout>
+
+    </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/navigation_view"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

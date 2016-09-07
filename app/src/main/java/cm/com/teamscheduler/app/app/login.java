@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,10 +66,13 @@ public class login extends AppCompatActivity {
                         User user = new User();
                         try {
                             user.setId(Long.parseLong(response.getString("id")));
+                            user.setFirstname(response.getString("firstname"));
+                            user.setLastname(response.getString("lastname"));
                             user.setUsername(response.getString("username"));
                             user.setPassword(response.getString("password"));
                             user.setAdmin(Boolean.parseBoolean(response.getString("admin")));
                             user.setAccesskey(response.getString("accesskey"));
+                            user.setAvatar(response.getString("avatar"));
                             //Set Position
                                 Position pos = new Position();
                                 pos.setId(Long.parseLong(response.getJSONObject("position").getString("id")));

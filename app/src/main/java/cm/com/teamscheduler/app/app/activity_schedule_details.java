@@ -1,17 +1,21 @@
 package cm.com.teamscheduler.app.app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,9 +47,11 @@ public class activity_schedule_details extends AppCompatActivity {
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    ImageView iv;
+    TextView tv;
+    //END
     Long scheduleId;
 
-    //END
 
 
     @Override
@@ -93,7 +99,19 @@ public class activity_schedule_details extends AppCompatActivity {
                 return false;
             }
         });
+        byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
+        Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
+        View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
+
+        iv = (ImageView) view.findViewById(R.id.avatar);
+        iv.setImageBitmap(pic);
+
+        tv = (TextView) view.findViewById(R.id.header_name);
+        tv.setText(Auth.getInstance().getLoggedUser().getUsername());
+
+        tv = (TextView) view.findViewById(R.id.header_subname);
+        tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
         //END OF MENU
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Bundle extras = getIntent().getExtras();

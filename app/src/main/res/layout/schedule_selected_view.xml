@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@drawable/bg">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="@drawable/bg"
+        >
+
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_titler_label"
+        android:layout_below="@+id/toolbar"
         android:textColor="#919191"
         android:text="Title:"
         android:textSize="20sp"
         android:textAlignment="center"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_title"
+        android:layout_below="@+id/schedule_titler_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -26,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_description_label"
+        android:layout_below="@+id/schedule_title"
         android:textColor="#919191"
         android:text="Description:"
         android:textSize="20sp"
@@ -34,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_description"
+        android:layout_below="@+id/schedule_description_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -43,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_startdate_label"
+        android:layout_below="@+id/schedule_description"
         android:textColor="#919191"
         android:text="Start Date:"
         android:textSize="20sp"
@@ -51,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_startdate"
+        android:layout_below="@+id/schedule_startdate_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -60,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_enddate_label"
+        android:layout_below="@+id/schedule_startdate"
         android:textColor="#919191"
         android:text="End Date:"
         android:textSize="20sp"
@@ -68,6 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_enddate"
+        android:layout_below="@+id/schedule_enddate_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -77,6 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_recurringtime_label"
+        android:layout_below="@+id/schedule_enddate"
         android:textColor="#919191"
         android:text="Recurring Time:"
         android:textSize="20sp"
@@ -85,6 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_recurringtime"
+        android:layout_below="@+id/schedule_recurringtime_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -94,6 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_assignedteam_label"
+        android:layout_below="@+id/schedule_recurringtime"
         android:textColor="#919191"
         android:text="Assigned Team:"
         android:textSize="20sp"
@@ -102,6 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_assignedteam"
+        android:layout_below="@+id/schedule_assignedteam_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -111,6 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_location_label"
+        android:layout_below="@+id/schedule_assignedteam"
         android:textColor="#919191"
         android:text="Location:"
         android:textSize="20sp"
@@ -119,6 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/schedule_location"
+        android:layout_below="@+id/schedule_location_label"
         android:textColor="#FFFFFF"
         android:text=""
         android:textSize="30sp"
@@ -129,7 +156,17 @@
         android:layout_height="wrap_content"
         android:text="Create Report"
         android:id="@+id/create_report_btn"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/schedule_location"
+        android:layout_centerHorizontal="true"
         android:onClick="createReportButtonOnClick" />
 
-</LinearLayout>
+</RelativeLayout>
+<android.support.design.widget.NavigationView
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:id="@+id/navigation_view"
+android:layout_gravity="start"
+app:menu="@menu/drawer_menu">
+
+</android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>

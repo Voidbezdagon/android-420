@@ -1,6 +1,8 @@
 package cm.com.teamscheduler.app.app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -10,10 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -53,7 +58,8 @@ public class activity_edit_location extends AppCompatActivity implements OnMapRe
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-
+    ImageView iv;
+    TextView tv;
     //END
 
     @Override
@@ -100,6 +106,19 @@ public class activity_edit_location extends AppCompatActivity implements OnMapRe
                 return false;
             }
         });
+        byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
+        Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
+
+        iv = (ImageView) view.findViewById(R.id.avatar);
+        iv.setImageBitmap(pic);
+
+        tv = (TextView) view.findViewById(R.id.header_name);
+        tv.setText(Auth.getInstance().getLoggedUser().getUsername());
+
+        tv = (TextView) view.findViewById(R.id.header_subname);
+        tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
         //END OF MENU
 
         //Begin get location request

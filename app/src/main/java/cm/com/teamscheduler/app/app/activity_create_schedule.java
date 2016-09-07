@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
@@ -12,12 +14,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -69,7 +73,8 @@ public class activity_create_schedule extends AppCompatActivity{
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-
+    ImageView iv;
+    TextView tv;
     //END
 
     @Override
@@ -115,6 +120,19 @@ public class activity_create_schedule extends AppCompatActivity{
                 return false;
             }
         });
+        byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
+        Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
+
+        iv = (ImageView) view.findViewById(R.id.avatar);
+        iv.setImageBitmap(pic);
+
+        tv = (TextView) view.findViewById(R.id.header_name);
+        tv.setText(Auth.getInstance().getLoggedUser().getUsername());
+
+        tv = (TextView) view.findViewById(R.id.header_subname);
+        tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
         //END OF MENU
 
         //Populate Team Dropdown from JSON

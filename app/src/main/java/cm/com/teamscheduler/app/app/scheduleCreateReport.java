@@ -1,16 +1,25 @@
 package cm.com.teamscheduler.app.app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,10 +57,72 @@ import cm.com.teamscheduler.app.utils.Auth;
  */
 public class scheduleCreateReport extends AppCompatActivity {
 
+    //FOR MENU
+    DrawerLayout dLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
+    ImageView iv;
+    TextView tv;
+    //END
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_form);
+
+        //TOOLBAR
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Create Report");
+
+        //MENU & TOOLBAR
+        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
+        dLayout.setDrawerListener(actionBarDrawerToggle);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.user_list_view:
+                        startActivity(new Intent(scheduleCreateReport.this, activity_user.class));
+                        break;
+                    case R.id.calendar_view:
+                        startActivity(new Intent(scheduleCreateReport.this,scheduleCalendar.class));
+                        break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(scheduleCreateReport.this,activity_schedule.class));
+                        break;
+                    case R.id.positions_view:
+                        startActivity(new Intent(scheduleCreateReport.this, activity_position.class));
+                        break;
+                    case R.id.location_view:
+                        startActivity(new Intent(scheduleCreateReport.this, activity_location.class));
+                        break;
+                    case R.id.team_view:
+                        startActivity(new Intent(scheduleCreateReport.this, activity_team.class));
+                        break;
+                }
+
+                return false;
+            }
+        });
+        byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
+        Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
+
+        iv = (ImageView) view.findViewById(R.id.avatar);
+        iv.setImageBitmap(pic);
+
+        tv = (TextView) view.findViewById(R.id.header_name);
+        tv.setText(Auth.getInstance().getLoggedUser().getUsername());
+
+        tv = (TextView) view.findViewById(R.id.header_subname);
+        tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        //END OF MENU
 
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final Schedule schedule = (Schedule) getIntent().getSerializableExtra("schedule");
@@ -167,5 +238,11 @@ public class scheduleCreateReport extends AppCompatActivity {
                 //System.out.println(jsonObjReq);
             }
         });
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
     }
 }

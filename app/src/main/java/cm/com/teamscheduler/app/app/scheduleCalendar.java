@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.FloatProperty;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,7 +23,9 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -63,6 +68,8 @@ public class scheduleCalendar extends AppCompatActivity {
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    ImageView iv;
+    TextView tv;
     //END
 
     @Override
@@ -109,6 +116,19 @@ public class scheduleCalendar extends AppCompatActivity {
                 return false;
             }
         });
+        byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
+        Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
+
+        iv = (ImageView) view.findViewById(R.id.avatar);
+        iv.setImageBitmap(pic);
+
+        tv = (TextView) view.findViewById(R.id.header_name);
+        tv.setText(Auth.getInstance().getLoggedUser().getUsername());
+
+        tv = (TextView) view.findViewById(R.id.header_subname);
+        tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
 
         //END OF MENU
 
@@ -191,8 +211,8 @@ public class scheduleCalendar extends AppCompatActivity {
                                                     {
                                                         ScheduleActivityReport sar = new ScheduleActivityReport();
                                                         sar.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("id")));
-                                                        //sar.setDate(sdf.parse(sdf.format(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("date"))));
-                                                        //sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("finished")));
+                                                        sar.setDate(sdf.parse(sdf.format(new Date(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getLong("date")))));
+                                                        sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("isFinished")));
                                                         sarList.add(l, sar);
                                                     }
                                                 }
@@ -221,8 +241,8 @@ public class scheduleCalendar extends AppCompatActivity {
                                                 for (int l = 0; l < response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").length(); l++) {
                                                     ScheduleActivityReport sar = new ScheduleActivityReport();
                                                     sar.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("id")));
-//                                                    sar.setDate(sdf.parse(sdf.format(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("date"))));
-//                                                    sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("finished")));
+                                                    sar.setDate(sdf.parse(sdf.format(new Date(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getLong("date")))));
+                                                    sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("activities").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("isFinished")));
                                                     sarList.add(sar);
                                                 }
                                             }
