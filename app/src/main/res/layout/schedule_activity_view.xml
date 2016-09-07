@@ -14,9 +14,14 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
         android:background="@drawable/bg">
+
         <include layout="@layout/toolbar"
             android:id="@+id/toolbar"/>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar">
         <ListView
             android:id="@+id/schedule_activity_list"
             android:layout_width="fill_parent"
@@ -24,10 +29,11 @@
             android:textColor="#FFFFFF"
             android:divider="@android:color/white"
             android:dividerHeight="1sp"
-            android:layout_below="@+id/toolbar"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingTop="10dp"/>
+
+        </ScrollView>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

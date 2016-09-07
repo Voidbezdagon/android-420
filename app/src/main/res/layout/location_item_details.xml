@@ -1,144 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1"
         android:background="@drawable/bg"
-        >
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <include layout="@layout/toolbar"
-            android:id="@+id/toolbar"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_id_label"
-            android:textColor="#AAAAAA"
-            android:text="Id:"
-            android:textSize="17sp"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="30dp"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/toolbar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_id"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/location_item_id_label"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="8dp"/>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_name_label"
-            android:textColor="#AAAAAA"
-            android:text="Name:"
-            android:textSize="17sp"
-            android:layout_below="@+id/location_item_id"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"/>
+                <TextView
+                    android:id="@+id/location_item_id_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Id:"
+                    android:textColor="#AAAAAA"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_name"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/location_item_id"
-            android:layout_toRightOf="@id/location_item_name_label"
-            android:layout_marginTop="14dp"
-            android:layout_marginLeft="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_floor_label"
-            android:textColor="#AAAAAA"
-            android:text="Floor:"
-            android:textSize="17sp"
-            android:layout_below="@+id/location_item_name"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_floor"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/location_item_name"
-            android:layout_toRightOf="@+id/location_item_floor_label"
-            android:layout_marginTop="14dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/location_item_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_toRightOf="@+id/location_item_id_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_number_label"
-            android:textColor="#AAAAAA"
-            android:text="Number:"
-            android:textSize="17sp"
-            android:layout_below="@+id/location_item_floor"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"/>
+                <TextView
+                    android:id="@+id/location_item_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_id"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Name:"
+                    android:textColor="#AAAAAA"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_number"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@id/location_item_floor"
-            android:layout_toRightOf="@id/location_item_number_label"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="14dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_details_label"
-            android:textColor="#AAAAAA"
-            android:text="Details:"
-            android:textSize="17sp"
-            android:layout_below="@+id/location_item_number"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"/>
+                <TextView
+                    android:id="@+id/location_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_id"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@id/location_item_name_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_item_details"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@id/location_item_number"
-            android:layout_toRightOf="@id/location_item_details_label"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="14dp"
-            />
+                <TextView
+                    android:id="@+id/location_item_floor_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_name"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Floor:"
+                    android:textColor="#AAAAAA"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/location_item_floor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_name"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@+id/location_item_floor_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+
+                <TextView
+                    android:id="@+id/location_item_number_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_floor"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Number:"
+                    android:textColor="#AAAAAA"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/location_item_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/location_item_floor"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@id/location_item_number_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/location_item_details_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_item_number"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Details:"
+                    android:textColor="#AAAAAA"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/location_item_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/location_item_number"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@id/location_item_details_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
+
     <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/navigation_view"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu">
 

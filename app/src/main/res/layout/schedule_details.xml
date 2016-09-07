@@ -1,213 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1"
         android:background="@drawable/bg"
-        >
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <include layout="@layout/toolbar"
-            android:id="@+id/toolbar"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_id_label"
-            android:textColor="#FFFFFF"
-            android:text="Id:"
-            android:textSize="17sp"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/toolbar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_id"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/schedule_id_label"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"/>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_title_label"
-            android:textColor="#ffffff"
-            android:text="Schedule Title:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_id"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_id_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Id:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_title"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_id"
-            android:layout_toRightOf="@+id/schedule_title_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@+id/schedule_id_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_description_label"
-            android:textColor="#ffffff"
-            android:text="Description:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_title"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_title_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_id"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Schedule Title:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_description"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_title"
-            android:layout_toRightOf="@+id/schedule_description_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_id"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_title_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_startdate_label"
-            android:textColor="#ffffff"
-            android:text="Start Date:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_description"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_description_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_title"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Description:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_startdate"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_description"
-            android:layout_toRightOf="@+id/schedule_startdate_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_title"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_description_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_enddate_label"
-            android:textColor="#ffffff"
-            android:text="End Date:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_startdate"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_startdate_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_description"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Start Date:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_enddate"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_startdate"
-            android:layout_toRightOf="@+id/schedule_enddate_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_description"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_startdate_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_recurringtime_label"
-            android:textColor="#ffffff"
-            android:text="Recurring time (in days):"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_enddate"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_enddate_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_startdate"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="End Date:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_recurringtime"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_enddate"
-            android:layout_toRightOf="@+id/schedule_recurringtime_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_startdate"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_enddate_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_assignedteam_label"
-            android:textColor="#ffffff"
-            android:text="Assigned Team:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_recurringtime"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_recurringtime_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_enddate"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Recurring time (in days):"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_assignedteam"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_recurringtime"
-            android:layout_toRightOf="@+id/schedule_assignedteam_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_recurringtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_enddate"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_recurringtime_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_location_label"
-            android:textColor="#ffffff"
-            android:text="Location:"
-            android:textSize="17sp"
-            android:layout_below="@+id/schedule_assignedteam"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/schedule_assignedteam_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_recurringtime"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Assigned Team:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_location"
-            android:textColor="#FFFFFF"
-            android:text=""
-            android:textSize="20sp"
-            android:layout_below="@+id/schedule_assignedteam"
-            android:layout_toRightOf="@+id/schedule_location_label"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="8dp"/>
+                <TextView
+                    android:id="@+id/schedule_assignedteam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_recurringtime"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_assignedteam_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
+                <TextView
+                    android:id="@+id/schedule_location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_assignedteam"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Location:"
+                    android:textColor="#ffffff"
+                    android:textSize="17sp" />
 
+                <TextView
+                    android:id="@+id/schedule_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/schedule_assignedteam"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/schedule_location_label"
+                    android:text=""
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+        </ScrollView>
 
     </RelativeLayout>
+
     <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/navigation_view"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu">
 
