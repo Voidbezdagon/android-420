@@ -31,15 +31,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cm.com.teamscheduler.R;
-import cm.com.teamscheduler.app.entity.Position;
-import cm.com.teamscheduler.app.entity.ScheduleActivity;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
- * Created by kostadin on 30.08.16.
+ * Created by void on 07.09.16.
  */
-public class activity_create_team extends AppCompatActivity {
+public class activity_edit_team extends AppCompatActivity {
     //FOR MENU
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -56,7 +54,7 @@ public class activity_create_team extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Create Team");
+        getSupportActionBar().setTitle("Edit Team");
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -68,22 +66,56 @@ public class activity_create_team extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.user_list_view:
-                        startActivity(new Intent(activity_create_team.this, activity_user.class));
+                        startActivity(new Intent(activity_edit_team.this, activity_user.class));
                         break;
                     case R.id.calendar_view:
-                        startActivity(new Intent(activity_create_team.this,scheduleCalendar.class));
+                        startActivity(new Intent(activity_edit_team.this,scheduleCalendar.class));
                         break;
                     case R.id.positions_view:
-                        startActivity(new Intent(activity_create_team.this, activity_position.class));
+                        startActivity(new Intent(activity_edit_team.this, activity_position.class));
                         break;
                     case R.id.location_view:
-                        startActivity(new Intent(activity_create_team.this, activity_location.class));
+                        startActivity(new Intent(activity_edit_team.this, activity_location.class));
                         break;
                 }
                 return false;
             }
         });
         //END OF MENU
+
+        //Begin get team request
+        String tag_json_obj = "json_obj_req";
+        String url2 = "http://10.0.2.2:8080/content/api/Team/get/" + getIntent().getLongExtra("teamId", 0);
+        System.out.println(url2);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url2, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            EditText tn = (EditText) findViewById(R.id.teamFormName);
+                            tn.setText(response.getString("teamname"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("mazen hui");
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                return headers;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        //End get team request
 
         //Get Users and feed them to Multi-select
         String tag_json_arry = "json_array_req";
@@ -133,9 +165,7 @@ public class activity_create_team extends AppCompatActivity {
         final ListView listview = (ListView) findViewById(R.id.teamFormUsers);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listview.setAdapter(adapter);
-
         //End get Users and feed them to Multi-select
-
 
         Button save = (Button) findViewById(R.id.buttonSaveTeam);
 
@@ -173,6 +203,7 @@ public class activity_create_team extends AppCompatActivity {
                 try
                 {
                     EditText tfn = (EditText) findViewById(R.id.teamFormName);
+                    js.put("id", getIntent().getLongExtra("teamId", 0));
                     js.put("teamname", tfn.getText().toString());
                     js.put("users", arr);
 
@@ -188,7 +219,7 @@ public class activity_create_team extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Intent i = new Intent(activity_create_team.this, activity_team.class);
+                                Intent i = new Intent(activity_edit_team.this, activity_team.class);
                                 startActivity(i);
                             }
                         }, new Response.ErrorListener() {

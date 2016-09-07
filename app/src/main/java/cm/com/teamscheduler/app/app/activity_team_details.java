@@ -42,7 +42,7 @@ public class activity_team_details extends AppCompatActivity {
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    Long userId;
+    Long teamId;
     //END
 
     @Override
@@ -102,7 +102,7 @@ public class activity_team_details extends AppCompatActivity {
         position = extras.getInt("key2");
         //The key argument here must match that used in the other activity
         if(teams!=null) {
-            userId = teams.get(position).getId();
+            teamId = teams.get(position).getId();
             TextView tv = (TextView) findViewById(R.id.team_id);
             tv.setText(teams.get(position).getId().toString());
             tv = (TextView) findViewById(R.id.team_teamname);
@@ -184,9 +184,9 @@ public class activity_team_details extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.main_menu_item_1:
             {
-                Intent i = new Intent(activity_team_details.this, activity_edit_user.class);
+                Intent i = new Intent(activity_team_details.this, activity_edit_team.class);
                 Bundle bundle = new Bundle();
-                bundle.putLong("userId", userId);
+                bundle.putLong("teamId", teamId);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -194,14 +194,14 @@ public class activity_team_details extends AppCompatActivity {
             case R.id.main_menu_item_2:
             {
                 String tag_json_obj = "json_obj_req";
-                String url2 = "http://10.0.2.2:8080/content/api/User/delete/" + userId;
+                String url2 = "http://10.0.2.2:8080/content/api/Team/delete/" + teamId;
                 System.out.println(url2);
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.DELETE,
                         url2, null,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                startActivity(new Intent(activity_team_details.this, activity_user.class));
+                                startActivity(new Intent(activity_team_details.this, activity_team.class));
                             }
                         }, new Response.ErrorListener() {
                     @Override

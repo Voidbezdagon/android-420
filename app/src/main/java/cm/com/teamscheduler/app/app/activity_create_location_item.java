@@ -31,6 +31,7 @@ import java.util.Map;
 
 import cm.com.teamscheduler.R;
 import cm.com.teamscheduler.app.entity.Position;
+import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
 
 /**
@@ -44,6 +45,7 @@ public class activity_create_location_item extends AppCompatActivity {
     NavigationView navigationView;
 
     //END
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

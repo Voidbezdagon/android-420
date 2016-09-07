@@ -207,7 +207,15 @@ public class activity_schedule_activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_menu_item_1: startActivity(new Intent(activity_schedule_activity.this, activity_create_schedule_activity.class));
+            case R.id.main_menu_item_1:
+            {
+                Bundle extras = getIntent().getExtras();
+                Intent i = new Intent(activity_schedule_activity.this, activity_create_schedule_activity.class);
+                i.putExtra("scheduleId", extras.getLong("scheduleId"));
+                startActivity(i);
+                break;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

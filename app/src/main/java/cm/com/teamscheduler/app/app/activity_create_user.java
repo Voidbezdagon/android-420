@@ -131,6 +131,7 @@ public class activity_create_user extends AppCompatActivity{
                     public void onResponse(JSONArray response) {
                         try {
                             for (int i = 0; i < response.length(); i++) {
+
                                 //Parsing Position from JSON to Entity
                                 Position item = new Position();
                                 item.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
