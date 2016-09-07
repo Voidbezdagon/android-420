@@ -101,6 +101,9 @@ public class scheduleCalendar extends AppCompatActivity {
                     case R.id.location_view:
                         startActivity(new Intent(scheduleCalendar.this, activity_location.class));
                         break;
+                    case R.id.team_view:
+                        startActivity(new Intent(scheduleCalendar.this, activity_team.class));
+                        break;
                 }
 
                 return false;

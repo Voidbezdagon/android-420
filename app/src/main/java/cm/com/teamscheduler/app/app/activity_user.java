@@ -196,6 +196,8 @@ public class activity_user extends AppCompatActivity {
         item.setVisible(false);
         item = menu.findItem(R.id.main_menu_item_3);
         item.setVisible(false);
+        item = menu.findItem(R.id.main_menu_item_4);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

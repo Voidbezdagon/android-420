@@ -79,6 +79,9 @@ public class activity_position extends AppCompatActivity {
                     case R.id.location_view:
                         startActivity(new Intent(activity_position.this, activity_location.class));
                         break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_position.this, activity_team.class));
+                        break;
                 }
 
                 return false;
@@ -183,6 +186,8 @@ public class activity_position extends AppCompatActivity {
         item = menu.findItem(R.id.main_menu_item_2);
         item.setVisible(false);
         item = menu.findItem(R.id.main_menu_item_3);
+        item.setVisible(false);
+        item = menu.findItem(R.id.main_menu_item_4);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }

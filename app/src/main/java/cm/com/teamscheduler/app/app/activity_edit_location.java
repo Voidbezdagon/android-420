@@ -83,11 +83,17 @@ public class activity_edit_location extends AppCompatActivity implements OnMapRe
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_edit_location.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_edit_location.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_edit_location.this, activity_position.class));
                         break;
                     case R.id.location_view:
                         startActivity(new Intent(activity_edit_location.this, activity_location.class));
+                        break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_edit_location.this, activity_team.class));
                         break;
                 }
 

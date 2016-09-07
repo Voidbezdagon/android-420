@@ -86,6 +86,9 @@ public class activity_user_detailes extends AppCompatActivity {
                     case R.id.location_view:
                         startActivity(new Intent(activity_user_detailes.this, activity_location.class));
                         break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_user_detailes.this, activity_team.class));
+                        break;
                 }
 
                 return false;
@@ -133,6 +136,8 @@ public class activity_user_detailes extends AppCompatActivity {
         item = menu.findItem(R.id.main_menu_item_2);
         item.setTitle("Delete User");
         item = menu.findItem(R.id.main_menu_item_3);
+        item.setVisible(false);
+        item = menu.findItem(R.id.main_menu_item_4);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }

@@ -71,11 +71,17 @@ public class activity_create_location_item extends AppCompatActivity {
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_create_location_item.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_create_location_item.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_create_location_item.this, activity_position.class));
                         break;
                     case R.id.location_view:
                         startActivity(new Intent(activity_create_location_item.this, activity_location.class));
+                        break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_create_location_item.this, activity_team.class));
                         break;
                 }
                 return false;

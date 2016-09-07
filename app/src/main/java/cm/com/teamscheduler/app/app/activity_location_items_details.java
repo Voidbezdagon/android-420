@@ -91,6 +91,9 @@ public class activity_location_items_details extends AppCompatActivity {
                     case R.id.location_view:
                         startActivity(new Intent(activity_location_items_details.this, activity_location.class));
                         break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_location_items_details.this, activity_team.class));
+                        break;
                 }
 
                 return false;
@@ -140,6 +143,8 @@ public class activity_location_items_details extends AppCompatActivity {
         item = menu.findItem(R.id.main_menu_item_2);
         item.setTitle("Delete Location Item");
         item = menu.findItem(R.id.main_menu_item_3);
+        item.setVisible(false);
+        item = menu.findItem(R.id.main_menu_item_4);
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }

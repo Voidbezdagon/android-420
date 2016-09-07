@@ -95,11 +95,17 @@ public class activity_create_user extends AppCompatActivity{
                     case R.id.calendar_view:
                         startActivity(new Intent(activity_create_user.this,scheduleCalendar.class));
                         break;
+                    case R.id.schedule_view:
+                        startActivity(new Intent(activity_create_user.this,activity_schedule.class));
+                        break;
                     case R.id.positions_view:
                         startActivity(new Intent(activity_create_user.this, activity_position.class));
                         break;
                     case R.id.location_view:
                         startActivity(new Intent(activity_create_user.this, activity_location.class));
+                        break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_create_user.this, activity_team.class));
                         break;
                 }
 

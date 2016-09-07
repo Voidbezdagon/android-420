@@ -99,6 +99,9 @@ public class activity_location_details extends AppCompatActivity implements OnMa
                     case R.id.location_view:
                         startActivity(new Intent(activity_location_details.this, activity_location.class));
                         break;
+                    case R.id.team_view:
+                        startActivity(new Intent(activity_location_details.this, activity_team.class));
+                        break;
                 }
 
                 return false;
@@ -173,6 +176,8 @@ public class activity_location_details extends AppCompatActivity implements OnMa
         item.setTitle("Delete Location");
         item = menu.findItem(R.id.main_menu_item_3);
         item.setTitle("View Location Items");
+        item = menu.findItem(R.id.main_menu_item_4);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -224,6 +229,7 @@ public class activity_location_details extends AppCompatActivity implements OnMa
                 i.putExtra("locationId", parentId);
                 startActivity(i);
                 break;
+
             }
 
         }

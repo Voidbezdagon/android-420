@@ -142,6 +142,8 @@ public class activity_schedule_details extends AppCompatActivity {
         item.setTitle("Delete Schedule");
         item = menu.findItem(R.id.main_menu_item_3);
         item.setTitle("View Schedule Activities");
+        item = menu.findItem(R.id.main_menu_item_4);
+        item.setTitle("View Schedule Reports");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -188,12 +190,17 @@ public class activity_schedule_details extends AppCompatActivity {
                 AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
             }
             break;
-            case R.id.main_menu_item_3:
+            case R.id.main_menu_item_3: {
                 Intent i = new Intent(activity_schedule_details.this, activity_schedule_activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putLong("scheduleId", scheduleId);
                 i.putExtras(bundle);
                 startActivity(i);
+            }
+            break;
+            case R.id.main_menu_item_4:{
+                startActivity(new Intent(activity_schedule_details.this,activity_schedule_report.class));
+            }
         }
         return super.onOptionsItemSelected(item);
     }
