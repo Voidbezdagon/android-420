@@ -128,6 +128,7 @@ public class activity_team_details extends AppCompatActivity {
             users = (ArrayList<User>) teams.get(position).getUsers();
             for(User user : users){
                 displayUsers.add(user.getFirstname() + " " + user.getLastname());
+
             }
             schedules = (ArrayList<Schedule>) teams.get(position).getSchedules();
             for(Schedule schedule : schedules){

@@ -120,8 +120,6 @@ public class activity_team extends AppCompatActivity {
 
         String url = "http://10.0.2.2:8080/content/api/Team/getAll";
 
-        final ArrayList<Schedule> schedules = new ArrayList<Schedule>();
-        final ArrayList<User> users= new ArrayList<User>();
         final ArrayList<String> displayList= new ArrayList<String>();
         final ArrayList<Team> teams = new ArrayList<Team>();
 
@@ -135,6 +133,7 @@ public class activity_team extends AppCompatActivity {
                                 Team team = new Team();
                                 team.setId(Long.parseLong(response.getJSONObject(i).getString("id")));
                                 team.setTeamname(response.getJSONObject(i).getString("teamname"));
+                                ArrayList<User> users= new ArrayList<User>();
                                 for (int j = 0; j < response.getJSONObject(i).getJSONArray("users").length(); j++)
                                 {
                                     User user = new User();
@@ -146,6 +145,7 @@ public class activity_team extends AppCompatActivity {
                                     users.add(j, user);
                                 }
                                 team.setUsers(users);
+                                ArrayList<Schedule> schedules = new ArrayList<Schedule>();
                                 for(int j=0; j<response.getJSONObject(i).getJSONArray("schedules").length(); j++){
                                     Schedule schedule = new Schedule();
                                     schedule.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("schedules").getJSONObject(j).getString("id")));
@@ -202,6 +202,7 @@ public class activity_team extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id){
+                System.out.println(teams.get(0).getUsers().size() + " svirka");
                 Intent i = new Intent(activity_team.this, activity_team_details.class);
                 i.putExtra("key2", position);
                 Bundle bundle = new Bundle();

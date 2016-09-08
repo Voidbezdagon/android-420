@@ -21,7 +21,8 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:fillViewport="true">
         <ListView
             android:id="@+id/schedule_activity_list"
             android:layout_width="fill_parent"

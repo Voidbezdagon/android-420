@@ -20,19 +20,20 @@
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            android:fillViewport="true">
 
-            <ListView
-                android:id="@+id/positionList"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@+id/toolbar"
-                android:divider="@android:color/white"
-                android:dividerHeight="1sp"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="10dp"
-                android:textColor="#FFFFFF" />
+                <ListView
+                    android:id="@+id/positionList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/toolbar"
+                    android:divider="@android:color/white"
+                    android:dividerHeight="1sp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="10dp"
+                    android:textColor="#FFFFFF" />
 
         </ScrollView>
     </RelativeLayout>
