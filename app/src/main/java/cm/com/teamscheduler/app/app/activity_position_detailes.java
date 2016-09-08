@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -54,9 +56,6 @@ public class activity_position_detailes extends AppCompatActivity {
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("User Profile");
-
-
-
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -105,22 +104,69 @@ public class activity_position_detailes extends AppCompatActivity {
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
         //END OF MENU
+
+        //CHECK IF WE GOT HERE FROM LIST VIEW OR FROM DETAILS VIEW
         Bundle extras = getIntent().getExtras();
         int position = -1;
 
-        ArrayList<Position> positions = (ArrayList<Position>) getIntent().getSerializableExtra("key");
-        position = extras.getInt("key2");
-        //The key argument here must match that used in the other activity
-        if(positions!=null) {
-            positionId = positions.get(position).getId();
-            TextView tv = (TextView) findViewById(R.id.position_id);
-            tv.setText(positions.get(position).getId().toString());
-            tv = (TextView) findViewById(R.id.position_name);
-            tv.setText(positions.get(position).getName());
-            tv = (TextView) findViewById(R.id.position_parentId);
-            tv.setText(positions.get(position).getParentId().toString());
-            tv = (TextView) findViewById(R.id.position_level);
-            tv.setText(positions.get(position).getLevel().toString());
+        if (getIntent().getSerializableExtra("key") != null) {
+            ArrayList<Position> positions = (ArrayList<Position>) getIntent().getSerializableExtra("key");
+            position = extras.getInt("key2");
+            //The key argument here must match that used in the other activity
+            if (positions != null) {
+                positionId = positions.get(position).getId();
+                TextView tv = (TextView) findViewById(R.id.position_id);
+                tv.setText(positions.get(position).getId().toString());
+                tv = (TextView) findViewById(R.id.position_name);
+                tv.setText(positions.get(position).getName());
+                tv = (TextView) findViewById(R.id.position_parentId);
+                tv.setText(positions.get(position).getParentId().toString());
+                tv = (TextView) findViewById(R.id.position_level);
+                tv.setText(positions.get(position).getLevel().toString());
+            }
+        }
+        else
+        {
+            //Begin get position request
+            String tag_json_obj = "json_obj_req";
+            String url2 = "http://10.0.2.2:8080/content/api/Position/get/" + getIntent().getLongExtra("positionId", 0);
+            System.out.println(url2);
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url2, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                positionId = Long.parseLong(response.getString("id"));
+                                TextView tv = (TextView) findViewById(R.id.position_id);
+                                tv.setText(response.getString("id"));
+                                tv = (TextView) findViewById(R.id.position_name);
+                                tv.setText(response.getString("name"));
+                                tv = (TextView) findViewById(R.id.position_parentId);
+                                tv.setText(response.getString("parentId"));
+                                tv = (TextView) findViewById(R.id.position_level);
+                                tv.setText(response.getString("level"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("mazen hui");
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                    return headers;
+                }
+            };
+
+            AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+            //End get position request
         }
     }
 

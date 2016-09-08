@@ -141,6 +141,7 @@ public class activity_user extends AppCompatActivity {
                                 user.setUsername(response.getJSONObject(i).getString("username"));
                                 user.setPassword(response.getJSONObject(i).getString("password"));
                                 user.setAdmin(Boolean.parseBoolean(response.getJSONObject(i).getString("admin")));
+                                position.setId(response.getJSONObject(i).getJSONObject("position").getLong("id"));
                                 position.setName(response.getJSONObject(i).getJSONObject("position").getString("name"));
                                 user.setPosition(position);
                                 users.add(i,user);

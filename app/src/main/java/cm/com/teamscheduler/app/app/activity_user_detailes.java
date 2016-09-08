@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -96,7 +97,6 @@ public class activity_user_detailes extends AppCompatActivity {
                         startActivity(new Intent(activity_user_detailes.this, activity_team.class));
                         break;
                 }
-
                 return false;
             }
         });
@@ -114,28 +114,103 @@ public class activity_user_detailes extends AppCompatActivity {
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
         //END OF MENU
+
+        //CHECK IF WE GOT HERE FROM LIST VIEW OR FROM DETAILS VIEW
         Bundle extras = getIntent().getExtras();
         int position = -1;
 
-        ArrayList<User> users = (ArrayList<User>) getIntent().getSerializableExtra("key");
-        position = extras.getInt("key2");
+        if (getIntent().getSerializableExtra("key") != null) {
+            ArrayList<User> users = (ArrayList<User>) getIntent().getSerializableExtra("key");
+            position = extras.getInt("key2");
             //The key argument here must match that used in the other activity
-        if(users!=null) {
-            userId = users.get(position).getId();
-            TextView tv = (TextView) findViewById(R.id.user_id);
-            tv.setText(users.get(position).getId().toString());
-            tv = (TextView) findViewById(R.id.user_firstname);
-            tv.setText(users.get(position).getFirstname());
-            tv = (TextView) findViewById(R.id.user_lastname);
-            tv.setText(users.get(position).getLastname());
-            tv = (TextView) findViewById(R.id.user_username);
-            tv.setText(users.get(position).getUsername());
-            tv = (TextView) findViewById(R.id.user_password);
-            tv.setText(users.get(position).getPassword());
-            tv = (TextView) findViewById(R.id.user_admin);
-            tv.setText(users.get(position).getAdmin().toString());
-            tv= (TextView) findViewById(R.id.user_position);
-            tv.setText(users.get(position).getPosition().getName());
+            if (users != null) {
+                userId = users.get(position).getId();
+                TextView tv = (TextView) findViewById(R.id.user_id);
+                tv.setText(users.get(position).getId().toString());
+                tv = (TextView) findViewById(R.id.user_firstname);
+                tv.setText(users.get(position).getFirstname());
+                tv = (TextView) findViewById(R.id.user_lastname);
+                tv.setText(users.get(position).getLastname());
+                tv = (TextView) findViewById(R.id.user_username);
+                tv.setText(users.get(position).getUsername());
+                tv = (TextView) findViewById(R.id.user_password);
+                tv.setText(users.get(position).getPassword());
+                tv = (TextView) findViewById(R.id.user_admin);
+                tv.setText(users.get(position).getAdmin().toString());
+                tv = (TextView) findViewById(R.id.user_position);
+                final Long positionId = users.get(position).getPosition().getId();
+                tv.setOnClickListener(new TextView.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(activity_user_detailes.this, activity_position_detailes.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("positionId", positionId);
+                        i.putExtras(bundle);
+                        startActivity(i);
+                    }
+                });
+                tv.setText(users.get(position).getPosition().getName());
+            }
+        }
+        else
+        {
+            //Begin get user request
+            String tag_json_obj = "json_obj_req";
+            String url2 = "http://10.0.2.2:8080/content/api/User/get/" + getIntent().getLongExtra("userId", 0);
+            System.out.println(url2);
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url2, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                userId = response.getLong("id");
+                                TextView tv = (TextView) findViewById(R.id.user_id);
+                                tv.setText(response.getString("id"));
+                                tv = (TextView) findViewById(R.id.user_firstname);
+                                tv.setText(response.getString("firstname"));
+                                tv = (TextView) findViewById(R.id.user_lastname);
+                                tv.setText(response.getString("lastname"));
+                                tv = (TextView) findViewById(R.id.user_username);
+                                tv.setText(response.getString("username"));
+                                tv = (TextView) findViewById(R.id.user_password);
+                                tv.setText(response.getString("password"));
+                                tv = (TextView) findViewById(R.id.user_admin);
+                                tv.setText(response.getString("admin"));
+                                tv = (TextView) findViewById(R.id.user_position);
+                                final Long positionId = response.getJSONObject("position").getLong("id");
+                                tv.setOnClickListener(new TextView.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent i = new Intent(activity_user_detailes.this, activity_position_detailes.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putLong("positionId", positionId);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+                                    }
+                                });
+                                tv.setText(positionId.toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("mazen hui");
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                    return headers;
+                }
+            };
+
+            AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+            //End get user request
         }
     }
 
@@ -159,7 +234,6 @@ public class activity_user_detailes extends AppCompatActivity {
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     //OPTIONS MENU
     @Override

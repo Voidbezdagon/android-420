@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -62,7 +65,6 @@ public class activity_team_details extends AppCompatActivity {
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("Team Profile");
-
 
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -114,26 +116,89 @@ public class activity_team_details extends AppCompatActivity {
         int position = -1;
         final ArrayList<String> displayUsers = new ArrayList<String>();
         final ArrayList<String> displaySchedules = new ArrayList<String>();
-        ArrayList<Team> teams = (ArrayList<Team>) getIntent().getSerializableExtra("key");
-        ArrayList<User> users;
-        ArrayList<Schedule> schedules;
-        position = extras.getInt("key2");
-        //The key argument here must match that used in the other activity
-        if(teams!=null) {
-            teamId = teams.get(position).getId();
-            TextView tv = (TextView) findViewById(R.id.team_id);
-            tv.setText(teams.get(position).getId().toString());
-            tv = (TextView) findViewById(R.id.team_teamname);
-            tv.setText(teams.get(position).getTeamname());
-            users = (ArrayList<User>) teams.get(position).getUsers();
-            for(User user : users){
-                displayUsers.add(user.getFirstname() + " " + user.getLastname());
+        final ArrayList<User> users;
+        final ArrayList<Schedule> schedules;
+        if (getIntent().getSerializableExtra("key") != null) {
+            ArrayList<Team> teams = (ArrayList<Team>) getIntent().getSerializableExtra("key");
+            position = extras.getInt("key2");
+            //The key argument here must match that used in the other activity
+            if (teams != null) {
+                teamId = teams.get(position).getId();
+                TextView tv = (TextView) findViewById(R.id.team_id);
+                tv.setText(teams.get(position).getId().toString());
+                tv = (TextView) findViewById(R.id.team_teamname);
+                tv.setText(teams.get(position).getTeamname());
+                users = (ArrayList<User>) teams.get(position).getUsers();
+                for (User user : users) {
+                    displayUsers.add(user.getFirstname() + " " + user.getLastname());
+                }
+                schedules = (ArrayList<Schedule>) teams.get(position).getSchedules();
+                for (Schedule schedule : schedules) {
+                    displaySchedules.add(schedule.getTitle());
+                }
+            } else
+            {
+                users = new ArrayList<User>();
+                schedules = new ArrayList<Schedule>();
+            }
+        }
+        else
+        {
+            //Begin get team request
+            users = new ArrayList<User>();
+            schedules = new ArrayList<Schedule>();
+            String tag_json_obj = "json_obj_req";
+            String url2 = "http://10.0.2.2:8080/content/api/Team/get/" + getIntent().getLongExtra("teamId", 0);
+            System.out.println(url2);
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url2, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                teamId = response.getLong("id");
+                                TextView tv = (TextView) findViewById(R.id.team_id);
+                                tv.setText(response.getString("teamname"));
+                                tv = (TextView) findViewById(R.id.team_teamname);
+                                tv.setText(response.getString("teamname"));
+                                for (int i = 0; i < response.getJSONArray("users").length(); i++)
+                                {
+                                    User u = new User();
+                                    u.setId(response.getJSONArray("users").getJSONObject(i).getLong("id"));
+                                    u.setFirstname(response.getJSONArray("users").getJSONObject(i).getString("firstname"));
+                                    u.setLastname(response.getJSONArray("users").getJSONObject(i).getString("lastname"));
+                                    users.add(i, u);
+                                    displayUsers.add(u.getFirstname() + " " + u.getLastname());
+                                }
+                                for (int i = 0; i < response.getJSONArray("schedules").length(); i++)
+                                {
+                                    Schedule s = new Schedule();
+                                    s.setId(response.getJSONArray("schedules").getJSONObject(i).getLong("id"));
+                                    s.setTitle(response.getJSONArray("schedules").getJSONObject(i).getString("title"));
+                                    schedules.add(i, s);
+                                    displaySchedules.add(s.getTitle());
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("mazen hui");
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                    return headers;
+                }
+            };
 
-            }
-            schedules = (ArrayList<Schedule>) teams.get(position).getSchedules();
-            for(Schedule schedule : schedules){
-                displaySchedules.add(schedule.getTitle());
-            }
+            AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+            //End get team request
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayUsers){
@@ -155,6 +220,21 @@ public class activity_team_details extends AppCompatActivity {
         ListView listview = (ListView) findViewById(R.id.team_users);
         listview.setAdapter(adapter);
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id){
+                Intent i = new Intent(activity_team_details.this, activity_user_detailes.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putLong("userId", users.get(position).getId());
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+
         adapter = new ArrayAdapter(this, R.layout.custom_text, displaySchedules){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
@@ -173,6 +253,19 @@ public class activity_team_details extends AppCompatActivity {
         };
         listview = (ListView) findViewById(R.id.team_schedule);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id){
+                Intent i = new Intent(activity_team_details.this, activity_schedule_details.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("scheduleId", schedules.get(position).getId());
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

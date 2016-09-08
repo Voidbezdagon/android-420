@@ -59,9 +59,6 @@ public class activity_position extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Positions List");
 
-
-
-
         //MENU & TOOLBAR
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );

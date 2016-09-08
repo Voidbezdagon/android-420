@@ -145,7 +145,9 @@ public class activity_schedule extends AppCompatActivity {
                                 schedule.setEndDate(new Date(Long.parseLong(response.getJSONObject(i).getString("endDate"))));
                                 schedule.setRecurringTime(Long.parseLong(response.getJSONObject(i).getString("recurringTime")));
                                 {
+                                    team.setId(response.getJSONObject(i).getJSONObject("assignedTeam").getLong("id"));
                                     team.setTeamname(response.getJSONObject(i).getJSONObject("assignedTeam").getString("teamname"));
+                                    location.setId(response.getJSONObject(i).getJSONObject("location").getLong("id"));
                                     location.setName(response.getJSONObject(i).getJSONObject("location").getString("name"));
                                 }
                                 schedule.setAssignedTeam(team);

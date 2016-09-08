@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -138,31 +141,87 @@ public class activity_location_details extends AppCompatActivity implements OnMa
 
         Bundle extras = getIntent().getExtras();
 
-        locations = (ArrayList<Location>) getIntent().getSerializableExtra("key");
-        position = extras.getInt("key2");
+        if (getIntent().getSerializableExtra("key") != null) {
+            locations = (ArrayList<Location>) getIntent().getSerializableExtra("key");
+            position = extras.getInt("key2");
+            //The key argument here must match that used in the other activity
+            if (locations != null) {
+                locationId = locations.get(position).getId();
+                TextView tv = (TextView) findViewById(R.id.location_id);
+                tv.setText(locations.get(position).getId().toString());
+                parentId = locations.get(position).getId();
+                tv = (TextView) findViewById(R.id.location_name);
+                tv.setText(locations.get(position).getName());
+                tv = (TextView) findViewById(R.id.location_region);
+                tv.setText(locations.get(position).getRegion());
+                tv = (TextView) findViewById(R.id.location_city);
+                tv.setText(locations.get(position).getCity());
+                tv = (TextView) findViewById(R.id.location_zip);
+                tv.setText(locations.get(position).getZip().toString());
+                tv = (TextView) findViewById(R.id.location_street);
+                tv.setText(locations.get(position).getStreet());
+                tv = (TextView) findViewById(R.id.location_street_number);
+                tv.setText(locations.get(position).getStreetNumber().toString());
+                tv = (TextView) findViewById(R.id.location_details);
+                tv.setText(locations.get(position).getDetails());
+                lat = locations.get(position).getLat();
+                lng = locations.get(position).getLng();
+            }
+        }
+        else
+        {
+            //Begin get location request
+            String tag_json_obj = "json_obj_req";
+            String url2 = "http://10.0.2.2:8080/content/api/Location/get/" + getIntent().getLongExtra("locationId", 0);
+            System.out.println(url2);
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url2, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                locationId = response.getLong("id");
+                                TextView tv = (TextView) findViewById(R.id.location_id);
+                                tv.setText(response.getString("id"));
+                                parentId = response.getLong("id");
+                                tv = (TextView) findViewById(R.id.location_name);
+                                tv.setText(response.getString("name"));
+                                tv = (TextView) findViewById(R.id.location_region);
+                                tv.setText(response.getString("region"));
+                                tv = (TextView) findViewById(R.id.location_city);
+                                tv.setText(response.getString("city"));
+                                tv = (TextView) findViewById(R.id.location_zip);
+                                tv.setText(response.getString("zip"));
+                                tv = (TextView) findViewById(R.id.location_street);
+                                tv.setText(response.getString("street"));
+                                tv = (TextView) findViewById(R.id.location_street_number);
+                                tv.setText(response.getString("streetNumber"));
+                                tv = (TextView) findViewById(R.id.location_details);
+                                tv.setText(response.getString("details"));
+                                lat = Float.parseFloat(response.getString("lat"));
+                                System.out.println(lat);
+                                lng = Float.parseFloat(response.getString("lng"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("mazen hui");
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                    return headers;
+                }
+            };
 
-        //The key argument here must match that used in the other activity
-        if(locations!=null) {
-            locationId = locations.get(position).getId();
-            TextView tv = (TextView) findViewById(R.id.location_id);
-            tv.setText(locations.get(position).getId().toString());
-            parentId=locations.get(position).getId();
-            tv = (TextView) findViewById(R.id.location_name);
-            tv.setText(locations.get(position).getName());
-            tv = (TextView) findViewById(R.id.location_region);
-            tv.setText(locations.get(position).getRegion());
-            tv = (TextView) findViewById(R.id.location_city);
-            tv.setText(locations.get(position).getCity());
-            tv = (TextView) findViewById(R.id.location_zip);
-            tv.setText(locations.get(position).getZip().toString());
-            tv = (TextView) findViewById(R.id.location_street);
-            tv.setText(locations.get(position).getStreet());
-            tv = (TextView) findViewById(R.id.location_street_number);
-            tv.setText(locations.get(position).getStreetNumber().toString());
-            tv = (TextView) findViewById(R.id.location_details);
-            tv.setText(locations.get(position).getDetails());
-            lat = locations.get(position).getLat();
-            lng = locations.get(position).getLng();
+            AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+            //End get location request
         }
     }
 
@@ -177,12 +236,20 @@ public class activity_location_details extends AppCompatActivity implements OnMa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng cord = new LatLng(lat, lng);
-        mMap.addMarker(new MarkerOptions().position(cord).title("Location"));
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(cord));
-        mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+        new CountDownTimer(1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                // Add a marker in Sydney and move the camera
+                LatLng cord = new LatLng(lat, lng);
+                mMap.addMarker(new MarkerOptions().position(cord).title("Location"));
+                mMap.getUiSettings().setZoomGesturesEnabled(true);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cord, 17.0f));
+            }
+        }.start();
     }
 
     //OPTIONS MENU
@@ -252,7 +319,6 @@ public class activity_location_details extends AppCompatActivity implements OnMa
             }
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
