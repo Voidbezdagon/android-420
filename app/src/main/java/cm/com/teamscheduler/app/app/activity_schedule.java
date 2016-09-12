@@ -121,6 +121,13 @@ public class activity_schedule extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_schedule.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         String tag_json_arry = "json_array_req";
@@ -206,6 +213,40 @@ public class activity_schedule extends AppCompatActivity {
 
                                 schedules.add(i,schedule);
                                 displayList.add(i,schedule.getTitle());
+
+                                ArrayAdapter adapter = new ArrayAdapter(activity_schedule.this, R.layout.custom_text, displayList){
+                                    @Override
+                                    public View getView(int position, View convertView, ViewGroup parent){
+                                        // Get the current item from ListView
+                                        View view = super.getView(position,convertView,parent);
+
+                                        // Get the Layout Parameters for ListView Current Item View
+                                        ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                        // Set the height of the Item View
+                                        params.height = 120;
+                                        view.setLayoutParams(params);
+
+                                        return view;
+                                    }
+                                };
+                                ListView listview = (ListView) findViewById(R.id.schedule_list);
+                                listview.setAdapter(adapter);
+
+                                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view,
+                                                            int position, long id){
+                                        Intent i = new Intent(activity_schedule.this, activity_schedule_details.class);
+                                        i.putExtra("key2", position);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("key", schedules);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+                                    }
+
+                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -228,41 +269,6 @@ public class activity_schedule extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        ListView listview = (ListView) findViewById(R.id.schedule_list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-                Intent i = new Intent(activity_schedule.this, activity_schedule_details.class);
-                i.putExtra("key2", position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", schedules);
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-
-        });
-
-
     }
     //DRAWER MENU
     @Override

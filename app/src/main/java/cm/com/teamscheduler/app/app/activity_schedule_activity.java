@@ -118,6 +118,13 @@ public class activity_schedule_activity extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_schedule_activity.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         String tag_json_arry = "json_object_req";
@@ -142,6 +149,25 @@ public class activity_schedule_activity extends AppCompatActivity {
 
                                 displayList.add(i,scheduleActivity.getDescription());
                                 scheduleActivities.add(i,scheduleActivity);
+
+                                ArrayAdapter adapter = new ArrayAdapter(activity_schedule_activity.this, R.layout.custom_text, displayList){
+                                    @Override
+                                    public View getView(int position, View convertView, ViewGroup parent){
+                                        // Get the current item from ListView
+                                        View view = super.getView(position,convertView,parent);
+
+                                        // Get the Layout Parameters for ListView Current Item View
+                                        ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                        // Set the height of the Item View
+                                        params.height = 120;
+                                        view.setLayoutParams(params);
+
+                                        return view;
+                                    }
+                                };
+                                ListView listview = (ListView) findViewById(R.id.schedule_activity_list);
+                                listview.setAdapter(adapter);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -164,41 +190,6 @@ public class activity_schedule_activity extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        ListView listview = (ListView) findViewById(R.id.schedule_activity_list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-                Intent i = new Intent(activity_schedule_activity.this, activity_schedule_activity_details.class);
-                i.putExtra("key2", position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", scheduleActivities);
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-
-        });
-
-
     }
     //DRAWER MENU
     @Override

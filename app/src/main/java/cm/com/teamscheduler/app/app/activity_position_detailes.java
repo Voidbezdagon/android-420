@@ -103,6 +103,13 @@ public class activity_position_detailes extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_position_detailes.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         //CHECK IF WE GOT HERE FROM LIST VIEW OR FROM DETAILS VIEW

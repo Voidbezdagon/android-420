@@ -119,6 +119,13 @@ public class activity_location_items_details extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_location_items_details.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
 

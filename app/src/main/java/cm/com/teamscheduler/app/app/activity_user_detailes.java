@@ -113,6 +113,13 @@ public class activity_user_detailes extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_user_detailes.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         //CHECK IF WE GOT HERE FROM LIST VIEW OR FROM DETAILS VIEW
@@ -150,6 +157,41 @@ public class activity_user_detailes extends AppCompatActivity {
                     }
                 });
                 tv.setText(users.get(position).getPosition().getName());
+                //Setting Avatar with a single GET request
+                String tag_json_obj = "json_obj_req";
+                String url2 = "http://10.0.2.2:8080/content/api/User/get/" + userId;
+                System.out.println(url2);
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                        url2, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    byte[] decodedString = Base64.decode(response.getString("avatar"), Base64.DEFAULT);
+                                    Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                                    iv = (ImageView) findViewById(R.id.avatar_detail);
+                                    iv.setImageBitmap(pic);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("mazen hui");
+                    }
+                }){
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        headers.put("access-key", Auth.getInstance().getLoggedUser().getAccesskey());
+                        return headers;
+                    }
+                };
+
+                AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
             }
         }
         else
@@ -190,6 +232,11 @@ public class activity_user_detailes extends AppCompatActivity {
                                     }
                                 });
                                 tv.setText(positionId.toString());
+                                byte[] decodedString = Base64.decode(response.getString("avatar"), Base64.DEFAULT);
+                                Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                                iv = (ImageView) findViewById(R.id.avatar_detail);
+                                iv.setImageBitmap(pic);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

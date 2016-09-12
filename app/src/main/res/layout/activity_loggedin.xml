@@ -24,17 +24,16 @@
             android:fillViewport="true"
             >
 
-
-            <ListView
-                android:id="@+id/listNoob"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:divider="@android:color/white"
-                android:dividerHeight="1sp"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="10dp"
-                android:textColor="#FFFFFF" />
+                <ListView
+                    android:id="@+id/listNoob"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@android:color/white"
+                    android:dividerHeight="1sp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="10dp"
+                    android:textColor="#FFFFFF" />
 
         </ScrollView>
     </RelativeLayout>

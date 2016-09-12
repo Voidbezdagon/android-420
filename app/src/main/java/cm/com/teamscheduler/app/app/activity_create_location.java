@@ -123,6 +123,13 @@ public class activity_create_location extends AppCompatActivity implements OnMap
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
 
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_create_location.this, activity_edit_logged_user.class));
+            }
+        });
+
         //END OF MENU
 
         //Google Map

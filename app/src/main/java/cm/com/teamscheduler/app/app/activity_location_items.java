@@ -109,6 +109,13 @@ public class activity_location_items extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_location_items.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
         Bundle extras = getIntent().getExtras();
         String tag_json_arry = "json_array_req";
@@ -139,6 +146,40 @@ public class activity_location_items extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                        ArrayAdapter adapter = new ArrayAdapter(activity_location_items.this, R.layout.custom_text, displayList){
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent){
+                                // Get the current item from ListView
+                                View view = super.getView(position,convertView,parent);
+
+                                // Get the Layout Parameters for ListView Current Item View
+                                ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                // Set the height of the Item View
+                                params.height = 120;
+                                view.setLayoutParams(params);
+
+                                return view;
+                            }
+                        };
+                        ListView listview = (ListView) findViewById(R.id.locationItemsList);
+                        listview.setAdapter(adapter);
+
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view,
+                                                    int position, long id){
+                                Intent i = new Intent(activity_location_items.this, activity_location_items_details.class);
+                                i.putExtra("key2", position);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("key", locationItems);
+                                i.putExtras(bundle);
+                                startActivity(i);
+                            }
+
+                        });
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -157,41 +198,6 @@ public class activity_location_items extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        ListView listview = (ListView) findViewById(R.id.locationItemsList);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-                Intent i = new Intent(activity_location_items.this, activity_location_items_details.class);
-                i.putExtra("key2", position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("key", locationItems);
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-
-        });
-
-
     }
     //DRAWER MENU
     @Override

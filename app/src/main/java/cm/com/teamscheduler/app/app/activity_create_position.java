@@ -111,6 +111,13 @@ public class activity_create_position extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_create_position.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         //Populate Position Dropdown from JSON

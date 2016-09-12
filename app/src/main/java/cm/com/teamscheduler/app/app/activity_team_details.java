@@ -53,6 +53,10 @@ public class activity_team_details extends AppCompatActivity {
     TextView tv;
     //END
     Long teamId;
+    ArrayList<String> displayUsers;
+    ArrayList<String> displaySchedules;
+    ArrayList<User> users;
+    ArrayList<Schedule> schedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +115,13 @@ public class activity_team_details extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_team_details.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
         Bundle extras = getIntent().getExtras();
         int position = -1;
@@ -141,6 +152,70 @@ public class activity_team_details extends AppCompatActivity {
                 users = new ArrayList<User>();
                 schedules = new ArrayList<Schedule>();
             }
+            ArrayAdapter adapter = new ArrayAdapter(activity_team_details.this, R.layout.custom_text, displayUsers){
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent){
+                    // Get the current item from ListView
+                    View view = super.getView(position,convertView,parent);
+
+                    // Get the Layout Parameters for ListView Current Item View
+                    ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                    // Set the height of the Item View
+                    params.height = 120;
+                    view.setLayoutParams(params);
+
+                    return view;
+                }
+            };
+            ListView listview = (ListView) findViewById(R.id.team_users);
+            listview.setAdapter(adapter);
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id){
+                    Intent i = new Intent(activity_team_details.this, activity_user_detailes.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("userId", users.get(position).getId());
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
+            });
+
+            adapter = new ArrayAdapter(activity_team_details.this, R.layout.custom_text, displaySchedules){
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent){
+                    // Get the current item from ListView
+                    View view = super.getView(position,convertView,parent);
+
+                    // Get the Layout Parameters for ListView Current Item View
+                    ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                    // Set the height of the Item View
+                    params.height = 120;
+                    view.setLayoutParams(params);
+
+                    return view;
+                }
+            };
+            listview = (ListView) findViewById(R.id.team_schedule);
+            listview.setAdapter(adapter);
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id){
+                    Intent i = new Intent(activity_team_details.this, activity_schedule_details.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("scheduleId", schedules.get(position).getId());
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
+            });
         }
         else
         {
@@ -181,6 +256,70 @@ public class activity_team_details extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            ArrayAdapter adapter = new ArrayAdapter(activity_team_details.this, R.layout.custom_text, displayUsers){
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent){
+                                    // Get the current item from ListView
+                                    View view = super.getView(position,convertView,parent);
+
+                                    // Get the Layout Parameters for ListView Current Item View
+                                    ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                    // Set the height of the Item View
+                                    params.height = 120;
+                                    view.setLayoutParams(params);
+
+                                    return view;
+                                }
+                            };
+                            ListView listview = (ListView) findViewById(R.id.team_users);
+                            listview.setAdapter(adapter);
+
+                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view,
+                                                        int position, long id){
+                                    Intent i = new Intent(activity_team_details.this, activity_user_detailes.class);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putLong("userId", users.get(position).getId());
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+                                }
+                            });
+
+                            adapter = new ArrayAdapter(activity_team_details.this, R.layout.custom_text, displaySchedules){
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent){
+                                    // Get the current item from ListView
+                                    View view = super.getView(position,convertView,parent);
+
+                                    // Get the Layout Parameters for ListView Current Item View
+                                    ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                    // Set the height of the Item View
+                                    params.height = 120;
+                                    view.setLayoutParams(params);
+
+                                    return view;
+                                }
+                            };
+                            listview = (ListView) findViewById(R.id.team_schedule);
+                            listview.setAdapter(adapter);
+
+                            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view,
+                                                        int position, long id){
+                                    Intent i = new Intent(activity_team_details.this, activity_schedule_details.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putLong("scheduleId", schedules.get(position).getId());
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+                                }
+                            });
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -200,72 +339,6 @@ public class activity_team_details extends AppCompatActivity {
             AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
             //End get team request
         }
-
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayUsers){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        ListView listview = (ListView) findViewById(R.id.team_users);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-                Intent i = new Intent(activity_team_details.this, activity_user_detailes.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putLong("userId", users.get(position).getId());
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-        });
-
-
-        adapter = new ArrayAdapter(this, R.layout.custom_text, displaySchedules){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                // Get the current item from ListView
-                View view = super.getView(position,convertView,parent);
-
-                // Get the Layout Parameters for ListView Current Item View
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-
-                // Set the height of the Item View
-                params.height = 120;
-                view.setLayoutParams(params);
-
-                return view;
-            }
-        };
-        listview = (ListView) findViewById(R.id.team_schedule);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id){
-                Intent i = new Intent(activity_team_details.this, activity_schedule_details.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("scheduleId", schedules.get(position).getId());
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -273,6 +346,8 @@ public class activity_team_details extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
     }
+
+
 
     //OPTIONS MENU
     @Override
@@ -288,7 +363,6 @@ public class activity_team_details extends AppCompatActivity {
         item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     //OPTIONS MENU
     @Override

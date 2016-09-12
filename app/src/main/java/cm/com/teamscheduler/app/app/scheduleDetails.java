@@ -76,6 +76,20 @@ public class scheduleDetails extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
         dLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        if (Auth.getInstance().getLoggedUser().getAdmin() == false)
+        {
+            MenuItem item;
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.user_list_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.schedule_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.positions_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.location_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.team_view);
+            item.setVisible(false);
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -116,6 +130,13 @@ public class scheduleDetails extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(scheduleDetails.this, activity_edit_logged_user.class));
+            }
+        });
 
         //END OF MENU
 

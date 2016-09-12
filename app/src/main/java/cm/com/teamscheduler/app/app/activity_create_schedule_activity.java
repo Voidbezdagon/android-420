@@ -93,6 +93,14 @@ public class activity_create_schedule_activity extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity_create_schedule_activity.this, activity_edit_logged_user.class));
+            }
+        });
         //END OF MENU
 
         Button save = (Button) findViewById(R.id.buttonSaveScheduleActivity);

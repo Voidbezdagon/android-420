@@ -89,6 +89,20 @@ public class scheduleCalendar extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,dLayout, toolbar, R.string.drawer_open, R.string.drawer_close );
         dLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        if (Auth.getInstance().getLoggedUser().getAdmin() == false)
+        {
+            MenuItem item;
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.user_list_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.schedule_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.positions_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.location_view);
+            item.setVisible(false);
+            item = (MenuItem) navigationView.getMenu().findItem(R.id.team_view);
+            item.setVisible(false);
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -119,6 +133,8 @@ public class scheduleCalendar extends AppCompatActivity {
         byte[] decodedString = Base64.decode(Auth.getInstance().getLoggedUser().getAvatar(), Base64.DEFAULT);
         Bitmap pic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
+
+
         View view = navigationView.inflateHeaderView(R.layout.navigarion_drawer_header);
 
         iv = (ImageView) view.findViewById(R.id.avatar);
@@ -129,6 +145,13 @@ public class scheduleCalendar extends AppCompatActivity {
 
         tv = (TextView) view.findViewById(R.id.header_subname);
         tv.setText(Auth.getInstance().getLoggedUser().getFirstname() + " " + Auth.getInstance().getLoggedUser().getLastname());
+
+        iv.setOnClickListener(new ImageView.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(scheduleCalendar.this, activity_edit_logged_user.class));
+            }
+        });
 
         //END OF MENU
 
@@ -291,6 +314,48 @@ public class scheduleCalendar extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                        ArrayAdapter adapter = new ArrayAdapter(scheduleCalendar.this, R.layout.custom_text, displayList);
+                        ListView listview = (ListView) findViewById(R.id.listNoob);
+                        //listview.setAdapter(adapter);
+
+                        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+                            @Override
+                            public void onDayClick(Date dateClicked) {
+                                ArrayList<Schedule> filteredList = new ArrayList<Schedule>();
+                                for (Schedule s : list)
+                                {
+                                    try {
+                                        for (long j = vsdf.parse(vsdf.format(s.getStartDate())).getTime(); j <= vsdf.parse(vsdf.format(s.getEndDate())).getTime(); j = j + (s.getRecurringTime() * 86400000))
+                                        {
+                                            if (vsdf.parse(vsdf.format(dateClicked)).getTime() == j)
+                                            {
+                                                filteredList.add(s);
+                                            }
+                                        }
+                                    }
+                                    catch (ParseException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                Intent i = new Intent(scheduleCalendar.this, scheduleDayList.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("schedules", filteredList);
+                                try {
+                                    bundle.putLong("dateClicked", vsdf.parse(vsdf.format(dateClicked)).getTime());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                i.putExtras(bundle);
+                                startActivity(i);
+                                //List<Event> events = compactCalendarView.getEvents(dateClicked);
+                            }
+
+                            @Override
+                            public void onMonthScroll(Date firstDayOfNewMonth) {
+
+                            }
+                        });
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -309,48 +374,6 @@ public class scheduleCalendar extends AppCompatActivity {
 
 
         AppController.getInstance().addToRequestQueue(req, tag_json_arry);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_text, displayList);
-        ListView listview = (ListView) findViewById(R.id.listNoob);
-        //listview.setAdapter(adapter);
-
-        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
-            @Override
-            public void onDayClick(Date dateClicked) {
-                ArrayList<Schedule> filteredList = new ArrayList<Schedule>();
-                for (Schedule s : list)
-                {
-                    try {
-                        for (long j = vsdf.parse(vsdf.format(s.getStartDate())).getTime(); j <= vsdf.parse(vsdf.format(s.getEndDate())).getTime(); j = j + (s.getRecurringTime() * 86400000))
-                        {
-                            if (vsdf.parse(vsdf.format(dateClicked)).getTime() == j)
-                            {
-                                filteredList.add(s);
-                            }
-                        }
-                    }
-                    catch (ParseException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                Intent i = new Intent(scheduleCalendar.this, scheduleDayList.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("schedules", filteredList);
-                try {
-                    bundle.putLong("dateClicked", vsdf.parse(vsdf.format(dateClicked)).getTime());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                i.putExtras(bundle);
-                startActivity(i);
-                //List<Event> events = compactCalendarView.getEvents(dateClicked);
-            }
-
-            @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-
-            }
-        });
     }
 
     @Override

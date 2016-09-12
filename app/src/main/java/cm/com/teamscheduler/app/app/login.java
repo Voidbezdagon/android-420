@@ -86,7 +86,14 @@ public class login extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        startActivity(new Intent(login.this, activity_user.class));
+                        if (user.getAdmin() == false)
+                        {
+                            startActivity(new Intent(login.this, scheduleCalendar.class));
+                        }
+                        else
+                        {
+                            startActivity(new Intent(login.this, activity_user.class));
+                        }
                     }
                 }, new Response.ErrorListener() {
 
