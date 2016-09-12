@@ -130,7 +130,6 @@ public class activity_schedule extends AppCompatActivity {
 
         final ArrayList<Schedule> schedules= new ArrayList<Schedule>();
         final ArrayList<String> displayList= new ArrayList<String>();
-        final ArrayList<ScheduleActivity> scheduleActivities = new ArrayList<ScheduleActivity>();
 
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         final SimpleDateFormat vsdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -159,6 +158,7 @@ public class activity_schedule extends AppCompatActivity {
                                 }
                                 schedule.setAssignedTeam(team);
                                 schedule.setLocation(location);
+                                ArrayList<ScheduleActivity> scheduleActivities = new ArrayList<ScheduleActivity>();
                                 for(int j=0; j<response.getJSONObject(i).getJSONArray("activities").length();j++){
                                     ScheduleActivity scheduleActivity = new ScheduleActivity();
                                     scheduleActivity.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("activities").getJSONObject(j).getString("id")));
