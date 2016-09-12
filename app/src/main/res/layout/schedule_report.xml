@@ -7,7 +7,7 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg"
         android:orientation="vertical"
         android:weightSum="1">
@@ -24,7 +24,7 @@
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:weightSum="1">
 
@@ -39,10 +39,32 @@
                     android:textSize="17sp" />
 
                 <ListView
-                    android:id="@+id/listNoob"
+                    android:id="@+id/activityList"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/report_activities_label"
+                    android:dividerHeight="0sp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="15dp"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/report_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/activityList"
+                    android:text="Reports:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+
+                <ListView
+                    android:id="@+id/reportList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/report_label"
                     android:dividerHeight="0sp"
                     android:paddingLeft="40dp"
                     android:paddingRight="40dp"
@@ -59,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navigarion_drawer_header"
+
         app:menu="@menu/drawer_menu">
 
     </android.support.design.widget.NavigationView>

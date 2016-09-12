@@ -28,6 +28,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +40,8 @@ import cm.com.teamscheduler.app.entity.Location;
 import cm.com.teamscheduler.app.entity.Position;
 import cm.com.teamscheduler.app.entity.Schedule;
 import cm.com.teamscheduler.app.entity.ScheduleActivity;
+import cm.com.teamscheduler.app.entity.ScheduleActivityReport;
+import cm.com.teamscheduler.app.entity.ScheduleReport;
 import cm.com.teamscheduler.app.entity.Team;
 import cm.com.teamscheduler.app.entity.User;
 import cm.com.teamscheduler.app.utils.Auth;
@@ -128,6 +132,9 @@ public class activity_schedule extends AppCompatActivity {
         final ArrayList<String> displayList= new ArrayList<String>();
         final ArrayList<ScheduleActivity> scheduleActivities = new ArrayList<ScheduleActivity>();
 
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final SimpleDateFormat vsdf = new SimpleDateFormat("yyyy-MM-dd");
+
         JsonArrayRequest req = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -159,6 +166,44 @@ public class activity_schedule extends AppCompatActivity {
                                     scheduleActivities.add(j,scheduleActivity);
                                 }
                                 schedule.setActivities(scheduleActivities);
+                                //Setting Reports
+                                ArrayList<ScheduleReport> reports = new ArrayList<ScheduleReport>();
+                                try {
+                                    if (response.getJSONObject(i).getJSONArray("reports").length() > 0) {
+                                        for (int k = 0; k < response.getJSONObject(i).getJSONArray("reports").length(); k++)
+                                        {
+                                            ScheduleReport rep = new ScheduleReport();
+                                            rep.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getString("id")));
+                                            rep.setDescription(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getString("description"));
+                                            rep.setDate(vsdf.parse(vsdf.format(new Date(Long.parseLong(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getString("date"))))));
+                                            //Setting ActivityReports to Report
+                                            ArrayList<ScheduleActivityReport> sarList = new ArrayList<ScheduleActivityReport>();
+                                            if (response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").length() > 0)
+                                            {
+                                                for (int l = 0; l < response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").length(); l++)
+                                                {
+                                                    ScheduleActivityReport sar = new ScheduleActivityReport();
+                                                    ScheduleActivity sa = new ScheduleActivity();
+                                                    sar.setId(Long.parseLong(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("id")));
+                                                    sar.setDate(sdf.parse(sdf.format(new Date(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getLong("date")))));
+                                                    sar.setFinished(Boolean.parseBoolean(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getString("isFinished")));
+                                                    sa.setDescription(response.getJSONObject(i).getJSONArray("reports").getJSONObject(k).getJSONArray("scheduleActivityReports").getJSONObject(l).getJSONObject("scheduleActivity").getString("description"));
+                                                    sar.setScheduleActivity(sa);
+                                                    sarList.add(l, sar);
+                                                }
+                                            }
+                                            rep.setActivityReports(sarList);
+                                            reports.add(k, rep);
+                                        }
+                                    }
+                                }
+                                catch (ParseException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                                schedule.setReports(reports);
+
+
                                 schedules.add(i,schedule);
                                 displayList.add(i,schedule.getTitle());
                             }

@@ -54,6 +54,7 @@ public class activity_schedule_details extends AppCompatActivity {
     TextView tv;
     //END
     Long scheduleId;
+    Schedule schedule = new Schedule();
 
 
 
@@ -127,6 +128,7 @@ public class activity_schedule_details extends AppCompatActivity {
             //The key argument here must match that used in the other activity
             if (schedules != null) {
                 scheduleId = schedules.get(position).getId();
+                schedule = schedules.get(position);
                 TextView tv = (TextView) findViewById(R.id.schedule_id);
                 tv.setText(schedules.get(position).getId().toString());
                 tv = (TextView) findViewById(R.id.schedule_title);
@@ -315,7 +317,11 @@ public class activity_schedule_details extends AppCompatActivity {
             }
             break;
             case R.id.main_menu_item_4:{
-                startActivity(new Intent(activity_schedule_details.this,activity_schedule_report.class));
+                Intent i = new Intent(activity_schedule_details.this, activity_schedule_report.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("schedule", schedule);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         }
         return super.onOptionsItemSelected(item);
