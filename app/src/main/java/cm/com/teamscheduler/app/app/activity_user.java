@@ -153,7 +153,7 @@ public class activity_user extends AppCompatActivity {
                                 position.setName(response.getJSONObject(i).getJSONObject("position").getString("name"));
                                 user.setPosition(position);
                                 users.add(i,user);
-                                displayList.add(i,user.getFirstname() + " " + user.getPassword());
+                                displayList.add(i,user.getFirstname() + " " + user.getLastname()    );
 
                                 ArrayAdapter adapter = new ArrayAdapter(activity_user.this, R.layout.custom_text, displayList){
                                     @Override

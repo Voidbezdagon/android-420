@@ -1,9 +1,11 @@
 package cm.com.teamscheduler.app.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +27,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +53,7 @@ import cm.com.teamscheduler.app.utils.Auth;
 /**
  * Created by kostadin on 30.08.16.
  */
-public class activity_schedule_details extends AppCompatActivity {
+public class activity_schedule_details extends AppCompatActivity  implements OnMapReadyCallback {
     //FOR MENU
     DrawerLayout dLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -56,7 +64,11 @@ public class activity_schedule_details extends AppCompatActivity {
     Long scheduleId;
     Schedule schedule = new Schedule();
 
-
+    //MAP
+    private GoogleMap mMap;
+    private Context context = this;
+    private Float lat;
+    private Float lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +81,13 @@ public class activity_schedule_details extends AppCompatActivity {
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("Schedule Details");
+
+        //MAP
+        //MAP
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
 
 
         //MENU & TOOLBAR
@@ -136,6 +155,8 @@ public class activity_schedule_details extends AppCompatActivity {
             if (schedules != null) {
                 scheduleId = schedules.get(position).getId();
                 schedule = schedules.get(position);
+                lat = schedules.get(position).getLocation().getLat();
+                lng = schedules.get(position).getLocation().getLng();
                 TextView tv = (TextView) findViewById(R.id.schedule_id);
                 tv.setText(schedules.get(position).getId().toString());
                 tv = (TextView) findViewById(R.id.schedule_title);
@@ -255,6 +276,27 @@ public class activity_schedule_details extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
+    }
+
+    //MAP
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        new CountDownTimer(1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                // Add a marker in Sydney and move the camera
+                LatLng cord = new LatLng(lat, lng);
+                mMap.addMarker(new MarkerOptions().position(cord).title("Location"));
+                mMap.getUiSettings().setZoomGesturesEnabled(true);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cord, 17.0f));
+            }
+        }.start();
     }
 
     //OPTIONS MENU

@@ -162,6 +162,8 @@ public class activity_schedule extends AppCompatActivity {
                                     team.setTeamname(response.getJSONObject(i).getJSONObject("assignedTeam").getString("teamname"));
                                     location.setId(response.getJSONObject(i).getJSONObject("location").getLong("id"));
                                     location.setName(response.getJSONObject(i).getJSONObject("location").getString("name"));
+                                    location.setLat(Float.parseFloat(response.getJSONObject(i).getJSONObject("location").getString("lat")));
+                                    location.setLng(Float.parseFloat(response.getJSONObject(i).getJSONObject("location").getString("lng")));
                                 }
                                 schedule.setAssignedTeam(team);
                                 schedule.setLocation(location);

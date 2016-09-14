@@ -1,10 +1,12 @@
 package cm.com.teamscheduler.app.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +42,7 @@ import cm.com.teamscheduler.app.utils.Auth;
 /**
  * Created by void on 26.08.16.
  */
-public class scheduleDetails extends AppCompatActivity {
+public class scheduleDetails extends AppCompatActivity implements OnMapReadyCallback {
 
     //FOR MENU
     DrawerLayout dLayout;
@@ -43,6 +51,12 @@ public class scheduleDetails extends AppCompatActivity {
     ImageView iv;
     TextView tv;
     //END
+
+    //MAP
+    private GoogleMap mMap;
+    private Context context = this;
+    private Float lat;
+    private Float lng;
 
     Schedule schedule;
     Long dateClicked;
@@ -147,6 +161,9 @@ public class scheduleDetails extends AppCompatActivity {
         Button btn = (Button) findViewById(R.id.create_report_btn);
         User user = Auth.getInstance().getLoggedUser();
 
+        lat = schedule.getLocation().getLat();
+        lng = schedule.getLocation().getLng();
+
         TextView tv = (TextView) findViewById(R.id.schedule_title);
         tv.setText(schedule.getTitle().toString());
         TextView tv1 = (TextView) findViewById(R.id.schedule_description);
@@ -223,6 +240,27 @@ public class scheduleDetails extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    //MAP
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        new CountDownTimer(1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                // Add a marker in Sydney and move the camera
+                LatLng cord = new LatLng(lat, lng);
+                mMap.addMarker(new MarkerOptions().position(cord).title("Location"));
+                mMap.getUiSettings().setZoomGesturesEnabled(true);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cord, 17.0f));
+            }
+        }.start();
     }
 
     public void createReportButtonOnClick(View v)
